@@ -22,8 +22,8 @@ class TodosMapDS implements ITodosLocalDS {
   }
 
   @override
-  Future<Either<Failure, Unit>> save(TaskModel model) {
-    // TODO: implement save
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> save(TaskModel model) async {
+    _map[model.uid] = model;
+    return const Right(unit);
   }
 }
