@@ -8,5 +8,5 @@ abstract class ITodosRepository {
   Stream<Either<Failure, List<TaskEntity>>> list(String params);
 
   ///
-  Future<Either<Failure, Unit>> update(TaskEntity params);
+  Future<Either<Failure, Unit>> save(TaskEntity params);
 }
