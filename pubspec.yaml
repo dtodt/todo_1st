@@ -96,3 +96,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+vars:
+  replace: --delete-conflicting-outputs
+  runner: flutter pub run build_runner
+
+scripts:
+  rbuild: $runner build $replace
+  rwatch: $runner watch $replace
