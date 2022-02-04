@@ -39,9 +39,10 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.4.0
   json_annotation: ^4.4.0
+  uuid: ^3.0.5
 
 dev_dependencies:
-  bloc_test: 9.0.2
+  bloc_test: ^9.0.2
   build_runner: ^2.1.7
 
   flutter_test:
