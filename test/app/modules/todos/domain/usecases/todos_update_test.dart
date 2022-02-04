@@ -18,10 +18,10 @@ void main() {
   /// TODO Fix this test when implement data models,
   ///  the task mock is breaking it.
   testWidgets('should not fail', (_) async {
-    when(repository.update(MockTodoTask()))
+    when(repository.update(MockTaskEntity()))
         .thenAnswer((_) async => const Right(unit));
 
-    final result = await usecase(MockTodoTask());
+    final result = await usecase(MockTaskEntity());
     expect(result, isNotNull);
   });
 }

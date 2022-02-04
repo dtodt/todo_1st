@@ -17,7 +17,7 @@ void main() {
 
   testWidgets('should list successfully', (_) async {
     when(repository.list('')).thenAnswer((_) => Stream.fromIterable([
-          Right([MockTodoTask()]),
+          Right([MockTaskEntity()]),
         ]));
 
     usecase('').listen(expectAsync1((result) => expect(result, isNotEmpty)));
