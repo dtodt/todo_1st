@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/todos_update.dart';
 
+import '../../../../../constants/index.dart';
 import '../../../../../mocks/index.dart';
 
 void main() {
@@ -15,13 +16,10 @@ void main() {
     usecase = TodosUpdate(repository);
   });
 
-  /// TODO Fix this test when implement data models,
-  ///  the task mock is breaking it.
   testWidgets('should not fail', (_) async {
-    when(repository.update(MockTaskEntity()))
-        .thenAnswer((_) async => const Right(unit));
+    when(repository.update(fTask)).thenAnswer((_) async => const Right(unit));
 
-    final result = await usecase(MockTaskEntity());
+    final result = await usecase(fTask);
     expect(result, isNotNull);
   });
 }

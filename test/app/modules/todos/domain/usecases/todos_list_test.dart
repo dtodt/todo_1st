@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
+import '../../../../../constants/index.dart';
 import '../../../../../mocks/index.dart';
 
 void main() {
@@ -17,7 +18,7 @@ void main() {
 
   testWidgets('should list successfully', (_) async {
     when(repository.list('')).thenAnswer((_) => Stream.fromIterable([
-          Right([MockTaskEntity()]),
+          Right([fTask]),
         ]));
 
     usecase('').listen(expectAsync1((result) => expect(result, isNotEmpty)));
