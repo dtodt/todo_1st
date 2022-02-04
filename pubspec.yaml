@@ -38,6 +38,7 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.4.0
+  json_annotation: ^4.4.0
 
 dev_dependencies:
   bloc_test: 9.0.2
@@ -52,6 +53,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.4
+  freezed: 1.1.0
+  freezed_annotation: ^1.1.0
+  json_serializable: ^6.1.4
   modular_codegen: ^3.0.3
   modular_test: ^1.0.1+1
   mockito: ^5.0.17
