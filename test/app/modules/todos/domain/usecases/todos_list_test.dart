@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
@@ -26,7 +27,7 @@ void main() {
 
   testWidgets('should list nothing', (_) async {
     when(repository.list('')).thenAnswer((_) => Stream.fromIterable([
-          Left(MockFailure()),
+          Left(Failure()),
         ]));
 
     usecase('').listen(expectAsync1((result) => expect(result, isEmpty)));

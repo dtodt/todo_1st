@@ -1,1 +1,1 @@
-export 'failures.dart';
+export 'failure.dart';
