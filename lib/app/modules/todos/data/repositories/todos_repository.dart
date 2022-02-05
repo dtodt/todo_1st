@@ -25,7 +25,9 @@ class TodosRepository implements ITodosRepository {
   ///
   @override
   Future<Either<Failure, Unit>> save(TaskEntity entity) async {
-    final TaskModel model = (entity as TaskModel).copyWith(
+    final TaskModel model = TaskModel(
+      description: entity.description,
+      done: entity.done,
       uid: _getUid(entity.uid),
     );
     return await _localDS.save(model);
