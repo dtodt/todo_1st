@@ -16,7 +16,6 @@ class TodosSave with FutureUseCase<Unit, TaskEntity> {
   @override
   Future<Unit> call(TaskEntity params) async {
     await repository.save(params);
-
     return unit;
   }
 }
