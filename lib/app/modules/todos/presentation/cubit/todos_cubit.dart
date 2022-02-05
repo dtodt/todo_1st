@@ -1,7 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
+part 'todos_cubit.g.dart';
+
+///
+@Injectable(lazy: true, singleton: false)
 class TodosCubit extends Cubit<String> {
   final TodosList _todosList;
   final TodosSave _todosSave;

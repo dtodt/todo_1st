@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:todo1st/app/core/errors/failure.dart';
-import 'package:todo1st/app/modules/todos/data/models/task_model.dart';
+import 'package:todo1st/app/core/errors/index.dart';
+import 'package:todo1st/app/modules/todos/data/models/index.dart';
 
 import 'i_todos_local_ds.dart';
 

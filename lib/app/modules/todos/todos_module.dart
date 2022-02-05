@@ -1,9 +1,20 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:todo1st/app/modules/todos/presentation/pages/todos_page.dart';
+import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
+import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
+import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
+import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/pages/index.dart';
 
 class TodosModule extends Module {
   @override
-  final List<Bind> binds = [];
+  final List<Bind> binds = [
+    Bind<ITodosLocalDS>((_) => const TodosMapDS()),
+    Bind<ITodosRepository>((i) => TodosRepository(i<ITodosLocalDS>())),
+    $TodosList,
+    $TodosSave,
+    $TodosCubit
+  ];
 
   @override
   final List<ModularRoute> routes = [
