@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.4
   dartx: ^1.0.0
   dartz: ^0.10.1
+  equatable: ^2.0.3
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.4.0
   json_annotation: ^4.4.0
