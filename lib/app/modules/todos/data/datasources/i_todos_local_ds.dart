@@ -5,7 +5,13 @@ import 'package:todo1st/app/modules/todos/data/models/index.dart';
 ///
 abstract class ITodosLocalDS {
   ///
+  Stream<Either<Failure, int>> count(String filter);
+
+  ///
   Stream<Either<Failure, List<TaskModel>>> list(String filter);
+
+  ///
+  Future<Either<Failure, TaskModel>> read(String filter);
 
   ///
   Future<Either<Failure, Unit>> save(TaskModel model);

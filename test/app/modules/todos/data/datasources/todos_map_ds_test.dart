@@ -7,6 +7,22 @@ import '../../../../../constants/index.dart';
 void main() {
   late ITodosLocalDS localDS;
 
+  testWidgets('should count 1', (_) async {
+    localDS = TodosMapDS(map: {'uid': fTask});
+
+    localDS
+        .count('')
+        .listen(expectAsync1((result) => expect(result.isRight(), true)));
+  });
+
+  testWidgets('should count 0', (_) async {
+    localDS = const TodosMapDS();
+
+    localDS
+        .count('')
+        .listen(expectAsync1((result) => expect(result.isLeft(), true)));
+  });
+
   testWidgets('should list successfully', (_) async {
     localDS = TodosMapDS(map: {'uid': fTask});
 
@@ -41,5 +57,19 @@ void main() {
     final result = await localDS.save(updated);
     expect(result.isRight(), true);
     expect(ds['uid'], updated);
+  });
+
+  testWidgets('should read successfully', (_) async {
+    localDS = TodosMapDS(map: {'uid': fTask});
+
+    final result = await localDS.read('uid');
+    expect(result.isRight(), true);
+  });
+
+  testWidgets('should read nothing', (_) async {
+    localDS = const TodosMapDS();
+
+    final result = await localDS.read('uid');
+    expect(result.isLeft(), true);
   });
 }
