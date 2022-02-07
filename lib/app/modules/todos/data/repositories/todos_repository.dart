@@ -18,8 +18,20 @@ class TodosRepository implements ITodosRepository {
 
   ///
   @override
+  Stream<Either<Failure, int>> count(String filter) {
+    return _localDS.count(filter);
+  }
+
+  ///
+  @override
   Stream<Either<Failure, List<TaskEntity>>> list(String filter) {
     return _localDS.list(filter);
+  }
+
+  ///
+  @override
+  Future<Either<Failure, TaskEntity>> read(String filter) {
+    return _localDS.read(filter);
   }
 
   ///

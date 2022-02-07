@@ -8,14 +8,14 @@ void main() {
   late ITodosLocalDS localDS;
 
   testWidgets('should count 1', (_) async {
-    localDS = TodosMapDS(map: {'uid': fTask});
+    localDS = TodosMapDS(map: {kUid: fTask});
 
     localDS
         .count('')
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
-  testWidgets('should count 0', (_) async {
+  testWidgets('should count nothing', (_) async {
     localDS = const TodosMapDS();
 
     localDS
@@ -24,7 +24,7 @@ void main() {
   });
 
   testWidgets('should list successfully', (_) async {
-    localDS = TodosMapDS(map: {'uid': fTask});
+    localDS = TodosMapDS(map: {kUid: fTask});
 
     localDS
         .list('')
@@ -45,31 +45,31 @@ void main() {
 
     final result = await localDS.save(fTaskWId);
     expect(result.isRight(), true);
-    expect(ds[kUid], fTaskWId);
+    expect(ds[kNewUid], fTaskWId);
   });
 
   testWidgets('should update', (_) async {
-    Map<String, TaskModel> ds = {'uid': fTask};
+    Map<String, TaskModel> ds = {kUid: fTask};
     localDS = TodosMapDS(map: ds);
 
     final updated = fTask.copyWith(done: false);
 
     final result = await localDS.save(updated);
     expect(result.isRight(), true);
-    expect(ds['uid'], updated);
+    expect(ds[kUid], updated);
   });
 
   testWidgets('should read successfully', (_) async {
-    localDS = TodosMapDS(map: {'uid': fTask});
+    localDS = TodosMapDS(map: {kUid: fTask});
 
-    final result = await localDS.read('uid');
+    final result = await localDS.read(kUid);
     expect(result.isRight(), true);
   });
 
   testWidgets('should read nothing', (_) async {
     localDS = const TodosMapDS();
 
-    final result = await localDS.read('uid');
+    final result = await localDS.read(kUid);
     expect(result.isLeft(), true);
   });
 }
