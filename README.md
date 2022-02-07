@@ -1,6 +1,6 @@
 # To-Do 1st
 
-A clean code To-do list experience with Flutter.
+A clean architecture To-do list experience with Flutter.
 
 ## Dependencies
 
@@ -8,3 +8,5 @@ A clean code To-do list experience with Flutter.
 - BLoC - for state management;
 - dartx - for utilities;
 - dartz - for functional programming;
+- freezed and equatable - for data model handling;
+- uuid - for standard id generation;
