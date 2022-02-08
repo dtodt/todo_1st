@@ -17,14 +17,14 @@ void main() {
     usecase = TodosRead(repository);
   });
 
-  testWidgets('should read successfully', (_) async {
+  test('should read successfully', () async {
     when(repository.read(kUid)).thenAnswer((_) async => Right(fTask));
 
     final result = await usecase(kUid);
     expect(result.isRight(), true);
   });
 
-  testWidgets('should read nothing', (_) async {
+  test('should read nothing', () async {
     when(repository.read(kUid)).thenAnswer((_) async => Left(Failure()));
 
     final result = await usecase(kUid);

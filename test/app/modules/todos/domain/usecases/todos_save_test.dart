@@ -16,7 +16,7 @@ void main() {
     usecase = TodosSave(repository);
   });
 
-  testWidgets('should not fail', (_) async {
+  test('should not fail', () async {
     when(repository.save(fTask)).thenAnswer((_) async => const Right(unit));
 
     final result = await usecase(fTask);

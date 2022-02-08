@@ -7,7 +7,7 @@ import '../../../../../constants/index.dart';
 void main() {
   late ITodosLocalDS localDS;
 
-  testWidgets('should count 1', (_) async {
+  test('should count 1', () async {
     localDS = TodosMapDS(map: {kUid: fTask});
 
     localDS
@@ -15,7 +15,7 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
-  testWidgets('should count nothing', (_) async {
+  test('should count nothing', () async {
     localDS = const TodosMapDS();
 
     localDS
@@ -23,7 +23,7 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
-  testWidgets('should list successfully', (_) async {
+  test('should list successfully', () async {
     localDS = TodosMapDS(map: {kUid: fTask});
 
     localDS
@@ -31,7 +31,7 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
-  testWidgets('should list nothing', (_) async {
+  test('should list nothing', () async {
     localDS = const TodosMapDS();
 
     localDS
@@ -39,7 +39,7 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
-  testWidgets('should create', (_) async {
+  test('should create', () async {
     Map<String, TaskModel> ds = {};
     localDS = TodosMapDS(map: ds);
 
@@ -48,7 +48,7 @@ void main() {
     expect(ds[kNewUid], fTaskWId);
   });
 
-  testWidgets('should update', (_) async {
+  test('should update', () async {
     Map<String, TaskModel> ds = {kUid: fTask};
     localDS = TodosMapDS(map: ds);
 
@@ -59,14 +59,14 @@ void main() {
     expect(ds[kUid], updated);
   });
 
-  testWidgets('should read successfully', (_) async {
+  test('should read successfully', () async {
     localDS = TodosMapDS(map: {kUid: fTask});
 
     final result = await localDS.read(kUid);
     expect(result.isRight(), true);
   });
 
-  testWidgets('should read nothing', (_) async {
+  test('should read nothing', () async {
     localDS = const TodosMapDS();
 
     final result = await localDS.read(kUid);

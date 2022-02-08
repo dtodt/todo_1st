@@ -16,7 +16,7 @@ void main() {
     usecase = TodosCount(repository);
   });
 
-  testWidgets('should count 1', (_) async {
+  test('should count 1', () async {
     when(repository.count('')).thenAnswer((_) => Stream.fromIterable([
           const Right(1),
         ]));
@@ -24,7 +24,7 @@ void main() {
     usecase('').listen(expectAsync1((result) => expect(result, 1)));
   });
 
-  testWidgets('should count 0', (_) async {
+  test('should count 0', () async {
     when(repository.count('')).thenAnswer((_) => Stream.fromIterable([
           Left(Failure()),
         ]));

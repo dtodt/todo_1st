@@ -17,18 +17,18 @@ void main() {
     usecase = TodosList(repository);
   });
 
-  testWidgets('should list successfully', (_) async {
-    when(repository.list('')).thenAnswer((_) => Stream.fromIterable([
+  test('should list successfully', () async {
+    when(repository.list('')).thenAnswer((_) => Stream.value(
           Right([fTask]),
-        ]));
+        ));
 
     usecase('').listen(expectAsync1((result) => expect(result, isNotEmpty)));
   });
 
-  testWidgets('should list nothing', (_) async {
-    when(repository.list('')).thenAnswer((_) => Stream.fromIterable([
+  test('should list nothing', () async {
+    when(repository.list('')).thenAnswer((_) => Stream.value(
           Left(Failure()),
-        ]));
+        ));
 
     usecase('').listen(expectAsync1((result) => expect(result, isEmpty)));
   });

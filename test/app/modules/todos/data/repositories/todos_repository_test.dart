@@ -21,7 +21,7 @@ void main() {
     repository = TodosRepository(localDS, uuid: uuid);
   });
 
-  testWidgets('should count 1', (_) async {
+  test('should count 1', () async {
     when(localDS.count('')).thenAnswer((_) => Stream.value(
           const Right(1),
         ));
@@ -31,7 +31,7 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
-  testWidgets('should count nothing', (_) async {
+  test('should count nothing', () async {
     when(localDS.count('')).thenAnswer((_) => Stream.value(
           Left(Failure()),
         ));
@@ -41,27 +41,27 @@ void main() {
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
-  testWidgets('should list successfully', (_) async {
-    when(localDS.list('')).thenAnswer((_) => Stream.fromIterable([
+  test('should list successfully', () async {
+    when(localDS.list('')).thenAnswer((_) => Stream.value(
           Right([fTask]),
-        ]));
+        ));
 
     repository
         .list('')
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
-  testWidgets('should list nothing', (_) async {
-    when(localDS.list('')).thenAnswer((_) => Stream.fromIterable([
+  test('should list nothing', () async {
+    when(localDS.list('')).thenAnswer((_) => Stream.value(
           Left(Failure()),
-        ]));
+        ));
 
     repository
         .list('')
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
-  testWidgets('should create', (_) async {
+  test('should create', () async {
     when(uuid.v1()).thenReturn(kNewUid);
     when(localDS.save(fTaskWId)).thenAnswer((_) async => const Right(unit));
 
@@ -69,21 +69,21 @@ void main() {
     expect(result.isRight(), true);
   });
 
-  testWidgets('should update', (_) async {
+  test('should update', () async {
     when(localDS.save(fTask)).thenAnswer((_) async => const Right(unit));
 
     final result = await repository.save(fTask);
     expect(result.isRight(), true);
   });
 
-  testWidgets('should read successfully', (_) async {
+  test('should read successfully', () async {
     when(localDS.read(kUid)).thenAnswer((_) async => Right(fTask));
 
     final result = await repository.read(kUid);
     expect(result.isRight(), true);
   });
 
-  testWidgets('should read nothing', (_) async {
+  test('should read nothing', () async {
     when(localDS.read(kUid)).thenAnswer((_) async => Left(Failure()));
 
     final result = await repository.read(kUid);
