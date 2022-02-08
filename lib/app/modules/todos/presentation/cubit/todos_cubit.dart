@@ -10,19 +10,28 @@ part 'todos_cubit.g.dart';
 ///
 @Injectable(lazy: true, singleton: false)
 class TodosCubit extends Cubit<TodosState> {
+  final TodosCount _todosCount;
   final TodosList _todosList;
+  final TodosRead _todosRead;
   final TodosSave _todosSave;
 
-  TodosCubit(this._todosList, this._todosSave) : super(TodosState.initial());
+  TodosCubit(
+    this._todosCount,
+    this._todosList,
+    this._todosRead,
+    this._todosSave,
+  ) : super(TodosState.initial());
 
   Future<void> add(String taskDescription) async {
     await save(TaskEntity(description: taskDescription));
   }
 
-  void filter(String filter) => emit(state.copyWith(filter: filter));
+  Stream<int> count(String filter) {
+    return _todosCount(filter);
+  }
 
-  Stream<List<TaskEntity>> list() {
-    return _todosList(state.filter);
+  Stream<List<TaskEntity>> list(String filter) {
+    return _todosList(filter);
   }
 
   Future<void> save(TaskEntity entity) async {
@@ -33,6 +42,15 @@ class TodosCubit extends Cubit<TodosState> {
   }
 
   Future<void> taskDone(String uid, bool checked) async {
-    /// TODO implement it when refactoring save usecase
+    final result = await _todosRead(uid);
+    result.fold((failure) {
+      /// TODO this should never happen, but we should log here just in case.
+    }, (task) async {
+      await save(TaskEntity(
+        description: task.description,
+        done: checked,
+        uid: task.uid,
+      ));
+    });
   }
 }

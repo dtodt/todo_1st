@@ -20,8 +20,14 @@ void main() {
     final repository = Modular.get<ITodosRepository>();
     expect(repository, isA<TodosRepository>());
 
+    final countUsecase = Modular.get<TodosCount>();
+    expect(countUsecase, isA<TodosCount>());
+
     final listUsecase = Modular.get<TodosList>();
     expect(listUsecase, isA<TodosList>());
+
+    final readUsecase = Modular.get<TodosRead>();
+    expect(readUsecase, isA<TodosRead>());
 
     final saveUsecase = Modular.get<TodosSave>();
     expect(saveUsecase, isA<TodosSave>());

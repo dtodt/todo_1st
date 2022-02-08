@@ -22,7 +22,7 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
       ),
       body: BlocBuilder<TodosCubit, TodosState>(
         bloc: store,
-        builder: (_, __) {
+        builder: (_, state) {
           return Column(
             children: [
               TaskAddInput(
@@ -31,7 +31,7 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
               Expanded(
                 child: Container(
                   child: TaskList(
-                    items: cubit.list(),
+                    items: cubit.list(state.filter),
                     onItemChecked: cubit.taskDone,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),

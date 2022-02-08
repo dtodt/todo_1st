@@ -14,7 +14,9 @@ class TodosModule extends Module {
   final List<Bind> binds = [
     Bind<ITodosLocalDS>((_) => TodosMapDS(map: HashMap<String, TaskModel>())),
     Bind<ITodosRepository>((i) => TodosRepository(i<ITodosLocalDS>())),
+    $TodosCount,
     $TodosList,
+    $TodosRead,
     $TodosSave,
     $TodosCubit
   ];

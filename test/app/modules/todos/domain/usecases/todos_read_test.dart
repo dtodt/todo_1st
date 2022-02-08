@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
@@ -20,6 +21,13 @@ void main() {
     when(repository.read(kUid)).thenAnswer((_) async => Right(fTask));
 
     final result = await usecase(kUid);
-    expect(result, isNotNull);
+    expect(result.isRight(), true);
+  });
+
+  testWidgets('should read nothing', (_) async {
+    when(repository.read(kUid)).thenAnswer((_) async => Left(Failure()));
+
+    final result = await usecase(kUid);
+    expect(result.isLeft(), true);
   });
 }
