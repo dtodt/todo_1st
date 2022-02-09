@@ -22,19 +22,19 @@ class TodosCubit extends Cubit<TodosState> {
     this._todosSave,
   ) : super(TodosState.initial());
 
-  Future<void> add(String taskDescription) async {
-    await save(TaskEntity(description: taskDescription));
+  Future<void> add(String description) async {
+    await save(TodoEntity(description: description));
   }
 
-  Stream<int> count(String filter) {
+  Stream<int> count(TodoFilter filter) {
     return _todosCount(filter);
   }
 
-  Stream<List<TaskEntity>> list(String filter) {
+  Stream<List<Todo>> list(TodoFilter filter) {
     return _todosList(filter);
   }
 
-  Future<void> save(TaskEntity entity) async {
+  Future<void> save(Todo entity) async {
     await _todosSave(entity);
     // Little hack to update the stream,
     // does not work properly beacuse the list method in datasource
@@ -46,7 +46,7 @@ class TodosCubit extends Cubit<TodosState> {
     result.fold((failure) {
       /// TODO this should never happen, but we should log here just in case.
     }, (task) async {
-      await save(TaskEntity(
+      await save(TodoEntity(
         description: task.description,
         done: checked,
         uid: task.uid,

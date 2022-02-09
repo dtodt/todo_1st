@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
+import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 
 import '../../../../../constants/index.dart';
@@ -21,33 +22,35 @@ void main() {
   blocTest<TodosCubit, TodosState>(
     'should call TodosSave when the add method is called',
     build: () {
-      when(mockTodosSave.call(fNewTaskEntity)).thenAnswer((_) async => unit);
+      when(mockTodosSave.call(fNewTodoEntity)).thenAnswer((_) async => unit);
       return todosCubit;
     },
     act: (cubit) => cubit.add(kDescription),
-    verify: (_) => verify(mockTodosSave.call(fNewTaskEntity)).called(1),
+    verify: (_) => verify(mockTodosSave.call(fNewTodoEntity)).called(1),
   );
 
   blocTest<TodosCubit, TodosState>(
     'should call TodosCount when the count method is called',
     build: () {
-      when(mockTodosCount.call('filter')).thenAnswer((_) => Stream.value(1));
+      when(mockTodosCount.call(TodoFilterEntity()))
+          .thenAnswer((_) => Stream.value(1));
       return todosCubit;
     },
-    act: (cubit) => cubit.count('filter'),
-    verify: (_) => verify(mockTodosCount.call('filter')).called(1),
+    act: (cubit) => cubit.count(TodoFilterEntity()),
+    verify: (_) => verify(mockTodosCount.call(TodoFilterEntity())).called(1),
   );
 
   blocTest<TodosCubit, TodosState>(
     'should call TodosList when the list method is called',
     build: () {
-      when(mockTodosList.call('filter')).thenAnswer((_) => Stream.value(
-            [fTask],
-          ));
+      when(mockTodosList.call(TodoFilterEntity()))
+          .thenAnswer((_) => Stream.value([
+                fTodo,
+              ]));
       return todosCubit;
     },
-    act: (cubit) => cubit.list('filter'),
-    verify: (_) => verify(mockTodosList.call('filter')).called(1),
+    act: (cubit) => cubit.list(TodoFilterEntity()),
+    verify: (_) => verify(mockTodosList.call(TodoFilterEntity())).called(1),
   );
 
   /// TODO verify why this test doesnt wait, causing the error:

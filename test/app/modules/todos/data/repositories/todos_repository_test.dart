@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
+import 'package:todo1st/app/modules/todos/data/models/index.dart';
 import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
+import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,62 +24,67 @@ void main() {
   });
 
   test('should count 1', () async {
-    when(localDS.count('')).thenAnswer((_) => Stream.value(
-          const Right(1),
-        ));
+    when(localDS.count(TodoFilterModel(state: TodoState.both)))
+        .thenAnswer((_) => Stream.value(
+              const Right(1),
+            ));
 
     repository
-        .count('')
+        .count(TodoFilterEntity())
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
   test('should count nothing', () async {
-    when(localDS.count('')).thenAnswer((_) => Stream.value(
-          Left(Failure()),
-        ));
+    when(localDS.count(TodoFilterModel(state: TodoState.both)))
+        .thenAnswer((_) => Stream.value(
+              Left(Failure()),
+            ));
 
     repository
-        .count('')
+        .count(TodoFilterEntity())
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
   test('should list successfully', () async {
-    when(localDS.list('')).thenAnswer((_) => Stream.value(
-          Right([fTask]),
-        ));
+    when(localDS.list(TodoFilterModel(state: TodoState.both)))
+        .thenAnswer((_) => Stream.value(
+              Right([fTodo]),
+            ));
 
     repository
-        .list('')
+        .list(TodoFilterEntity())
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
   test('should list nothing', () async {
-    when(localDS.list('')).thenAnswer((_) => Stream.value(
-          Left(Failure()),
-        ));
+    when(localDS.list(TodoFilterModel(state: TodoState.both)))
+        .thenAnswer((_) => Stream.value(
+              Left(Failure()),
+            ));
 
     repository
-        .list('')
+        .list(TodoFilterEntity())
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
   test('should create', () async {
     when(uuid.v1()).thenReturn(kNewUid);
-    when(localDS.save(fTaskWId)).thenAnswer((_) async => const Right(unit));
+    when(localDS.save(fNewTodoUpdated))
+        .thenAnswer((_) async => const Right(unit));
 
-    final result = await repository.save(fNewTask);
+    final result = await repository.save(fNewTodo);
     expect(result.isRight(), true);
   });
 
   test('should update', () async {
-    when(localDS.save(fTask)).thenAnswer((_) async => const Right(unit));
+    when(localDS.save(fTodo)).thenAnswer((_) async => const Right(unit));
 
-    final result = await repository.save(fTask);
+    final result = await repository.save(fTodo);
     expect(result.isRight(), true);
   });
 
   test('should read successfully', () async {
-    when(localDS.read(kUid)).thenAnswer((_) async => Right(fTask));
+    when(localDS.read(kUid)).thenAnswer((_) async => Right(fTodo));
 
     final result = await repository.read(kUid);
     expect(result.isRight(), true);

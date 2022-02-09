@@ -12,7 +12,7 @@ import 'package:todo1st/app/modules/todos/presentation/pages/index.dart';
 class TodosModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind<ITodosLocalDS>((_) => TodosMapDS(map: HashMap<String, TaskModel>())),
+    Bind<ITodosLocalDS>((_) => TodosMapDS(map: HashMap<String, TodoModel>())),
     Bind<ITodosRepository>((i) => TodosRepository(i<ITodosLocalDS>())),
     $TodosCount,
     $TodosList,
