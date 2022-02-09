@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo1st/app/core/errors/index.dart';
+import 'package:todo1st/app/modules/todos/domain/entities/todo_filter.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
@@ -18,18 +19,20 @@ void main() {
   });
 
   test('should list successfully', () async {
-    when(repository.list('')).thenAnswer((_) => Stream.value(
-          Right([fTask]),
+    when(repository.list(TodoFilterEntity())).thenAnswer((_) => Stream.value(
+          Right([fTodo]),
         ));
 
-    usecase('').listen(expectAsync1((result) => expect(result, isNotEmpty)));
+    usecase(TodoFilterEntity())
+        .listen(expectAsync1((result) => expect(result, isNotEmpty)));
   });
 
   test('should list nothing', () async {
-    when(repository.list('')).thenAnswer((_) => Stream.value(
+    when(repository.list(TodoFilterEntity())).thenAnswer((_) => Stream.value(
           Left(Failure()),
         ));
 
-    usecase('').listen(expectAsync1((result) => expect(result, isEmpty)));
+    usecase(TodoFilterEntity())
+        .listen(expectAsync1((result) => expect(result, isEmpty)));
   });
 }

@@ -5,14 +5,9 @@ const kDescription = 'Test';
 const kUid = 'uid';
 const kNewUid = 'newUid';
 
-final fTask = TaskModel(description: kDescription, uid: kUid, done: true);
-final fNewTask = TaskModel(description: kDescription);
-final fTaskWId = TaskModel(description: kDescription, uid: kNewUid);
+final fTodo = TodoModel(description: kDescription, uid: kUid, done: true);
+final fNewTodo = TodoModel(description: kDescription, uid: '', done: false);
+final fNewTodoUpdated =
+    TodoModel(description: kDescription, uid: kNewUid, done: false);
 
-final fTaskEntity = TaskEntity(description: kDescription, uid: kUid);
-final fTaskEntityUpdated = TaskEntity(
-  description: kDescription,
-  uid: kUid,
-  done: true,
-);
-final fNewTaskEntity = TaskEntity(description: kDescription);
+final TodoEntity fNewTodoEntity = TodoEntity(description: kDescription);

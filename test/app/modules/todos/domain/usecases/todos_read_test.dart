@@ -18,7 +18,7 @@ void main() {
   });
 
   test('should read successfully', () async {
-    when(repository.read(kUid)).thenAnswer((_) async => Right(fTask));
+    when(repository.read(kUid)).thenAnswer((_) async => Right(fTodo));
 
     final result = await usecase(kUid);
     expect(result.isRight(), true);

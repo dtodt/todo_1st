@@ -18,28 +18,26 @@ class TodosRepository implements ITodosRepository {
 
   ///
   @override
-  Stream<Either<Failure, int>> count(String filter) {
-    return _localDS.count(filter);
+  Stream<Either<Failure, int>> count(TodoFilter filter) {
+    return _localDS.count(TodoFilterModel.fromEntity(filter));
   }
 
   ///
   @override
-  Stream<Either<Failure, List<TaskEntity>>> list(String filter) {
-    return _localDS.list(filter);
+  Stream<Either<Failure, List<Todo>>> list(TodoFilter filter) {
+    return _localDS.list(TodoFilterModel.fromEntity(filter));
   }
 
   ///
   @override
-  Future<Either<Failure, TaskEntity>> read(String filter) {
+  Future<Either<Failure, Todo>> read(String filter) {
     return _localDS.read(filter);
   }
 
   ///
   @override
-  Future<Either<Failure, Unit>> save(TaskEntity entity) async {
-    final TaskModel model = TaskModel(
-      description: entity.description,
-      done: entity.done,
+  Future<Either<Failure, Unit>> save(Todo entity) async {
+    final TodoModel model = TodoModel.fromEntity(entity).copyWith(
       uid: _getUid(entity.uid),
     );
     return await _localDS.save(model);

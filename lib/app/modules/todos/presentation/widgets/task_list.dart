@@ -12,14 +12,14 @@ class TaskList extends StatelessWidget {
     required this.onItemChecked,
   }) : super(key: key);
 
-  final Stream<List<TaskEntity>>? items;
+  final Stream<List<Todo>>? items;
   final CheckCallback? onItemChecked;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<TaskEntity>>(
+    return StreamBuilder<List<Todo>>(
       stream: items,
-      builder: (_, AsyncSnapshot<List<TaskEntity>> snapshots) {
+      builder: (_, AsyncSnapshot<List<Todo>> snapshots) {
         if (!snapshots.hasData) {
           return const Center(
             child: CircularProgressIndicator.adaptive(),

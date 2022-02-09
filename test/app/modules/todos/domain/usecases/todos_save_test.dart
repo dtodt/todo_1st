@@ -17,9 +17,9 @@ void main() {
   });
 
   test('should not fail', () async {
-    when(repository.save(fTask)).thenAnswer((_) async => const Right(unit));
+    when(repository.save(fTodo)).thenAnswer((_) async => const Right(unit));
 
-    final result = await usecase(fTask);
+    final result = await usecase(fTodo);
     expect(result, isNotNull);
   });
 }
