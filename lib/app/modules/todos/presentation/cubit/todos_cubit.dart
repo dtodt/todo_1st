@@ -26,7 +26,7 @@ class TodosCubit extends Cubit<TodosState> {
     await save(TodoEntity(description: description));
   }
 
-  Stream<int> count(TodoFilter filter) {
+  Future<TodoCount> count(TodoFilter filter) {
     return _todosCount(filter);
   }
 

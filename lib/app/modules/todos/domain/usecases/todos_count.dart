@@ -7,16 +7,17 @@ part 'todos_count.g.dart';
 
 ///
 @Injectable(lazy: true, singleton: false)
-class TodosCount with StreamUseCase<int, TodoFilter> {
+class TodosCount with FutureUseCase<TodoCount, TodoFilter> {
   final ITodosRepository repository;
 
   const TodosCount(this.repository);
 
   @override
-  Stream<int> call(TodoFilter params) async* {
-    yield* repository.count(params).map((result) => result.fold(
-          (_) => 0,
-          (todos) => todos,
-        ));
+  Future<TodoCount> call(TodoFilter params) async {
+    final result = await repository.count(params);
+    return result.fold(
+      (_) => TodoCountEntity(),
+      (todos) => todos,
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 ///
 abstract class ITodosRepository {
   ///
-  Stream<Either<Failure, int>> count(TodoFilter filter);
+  Future<Either<Failure, TodoCount>> count(TodoFilter filter);
 
   ///
   Stream<Either<Failure, List<Todo>>> list(TodoFilter filter);

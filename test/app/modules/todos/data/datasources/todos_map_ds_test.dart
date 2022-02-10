@@ -1,42 +1,62 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
 import 'package:todo1st/app/modules/todos/data/models/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 
 import '../../../../../constants/index.dart';
 
 void main() {
   late ITodosLocalDS localDS;
 
-  test('should count 1', () async {
-    localDS = TodosMapDS(map: {kUid: fTodo});
+  test('should count sucessfully', () async {
+    localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
 
-    localDS
-        .list(TodoFilterModel(state: TodoState.both))
-        .listen(expectAsync1((result) => expect(result.isRight(), true)));
+    final result = await localDS.count(fFilterBoth);
+    expect(result.isRight(), true);
+    expect(
+      result.getOrElse(() => TodoCountModel()),
+      TodoCountModel(available: 1, done: 1, total: 2),
+    );
   });
 
   test('should count nothing', () async {
     localDS = const TodosMapDS(map: {});
 
-    localDS
-        .list(TodoFilterModel(state: TodoState.both))
-        .listen(expectAsync1((result) => expect(result.isLeft(), true)));
+    final result = await localDS.count(fFilterBoth);
+    expect(result.isLeft(), true);
   });
 
-  test('should list successfully', () async {
+  test('should list 2, using filter both', () async {
+    localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
+
+    localDS.list(fFilterBoth).listen(expectAsync1((result) {
+      expect(result.isRight(), true);
+      expect(result.getOrElse(() => []).length, 2);
+    }));
+  });
+
+  test('should list 1, using filter done', () async {
+    localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
+
+    localDS.list(fFilterDone).listen(expectAsync1((result) {
+      expect(result.isRight(), true);
+      expect(result.getOrElse(() => []).length, 1);
+    }));
+  });
+
+  test('should list 0, using filter todo', () async {
     localDS = TodosMapDS(map: {kUid: fTodo});
 
-    localDS
-        .list(TodoFilterModel(state: TodoState.both))
-        .listen(expectAsync1((result) => expect(result.isRight(), true)));
+    localDS.list(fFilterTodo).listen(expectAsync1((result) {
+      expect(result.isRight(), true);
+      expect(result.getOrElse(() => []).length, 0);
+    }));
   });
 
   test('should list nothing', () async {
     localDS = const TodosMapDS(map: {});
 
     localDS
-        .list(TodoFilterModel(state: TodoState.both))
+        .list(fFilterBoth)
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 

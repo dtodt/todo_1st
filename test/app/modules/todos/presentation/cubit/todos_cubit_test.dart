@@ -33,7 +33,7 @@ void main() {
     'should call TodosCount when the count method is called',
     build: () {
       when(mockTodosCount.call(TodoFilterEntity()))
-          .thenAnswer((_) => Stream.value(1));
+          .thenAnswer((_) async => TodoCountEntity());
       return todosCubit;
     },
     act: (cubit) => cubit.count(TodoFilterEntity()),

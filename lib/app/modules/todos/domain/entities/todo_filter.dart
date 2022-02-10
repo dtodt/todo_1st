@@ -19,7 +19,7 @@ abstract class TodoFilter {
   TodoState get state;
 }
 
-///
+/// Domain implementation of todo filter
 @freezed
 class TodoFilterEntity with _$TodoFilterEntity implements TodoFilter {
   factory TodoFilterEntity({@Default(TodoState.both) TodoState state}) =

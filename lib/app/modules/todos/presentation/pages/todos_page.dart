@@ -16,32 +16,40 @@ class TodosPage extends StatefulWidget {
 class TodosPageState extends ModularState<TodosPage, TodosCubit> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: BlocBuilder<TodosCubit, TodosState>(
-        bloc: store,
-        builder: (_, state) {
-          return Column(
-            children: [
-              TaskAddInput(
-                onAddTask: cubit.add,
-              ),
-              Expanded(
-                child: Container(
-                  child: TaskList(
-                    items: cubit.list(state.filter),
-                    onItemChecked: cubit.taskDone,
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+    return BlocBuilder<TodosCubit, TodosState>(
+      bloc: store,
+      builder: (_, state) => Scaffold(
+        appBar: AppBar(
+          title: Text('${widget.title}'), // [$done ~ $total]
+        ),
+        body: Column(
+          children: [
+            TaskAddInput(
+              onAddTask: cubit.add,
+            ),
+            Expanded(
+              child: Container(
+                child: TaskList(
+                  items: cubit.list(state.filter),
+                  onItemChecked: cubit.taskDone,
                 ),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
               ),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-          );
-        },
+            ),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+        ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
