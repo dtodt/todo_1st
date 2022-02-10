@@ -19,21 +19,17 @@ void main() {
 
   test('should count 1', () async {
     when(repository.count(TodoFilterEntity()))
-        .thenAnswer((_) => Stream.fromIterable([
-              const Right(1),
-            ]));
+        .thenAnswer((_) async => Right(TodoCountEntity(total: 1)));
 
-    usecase(TodoFilterEntity())
-        .listen(expectAsync1((result) => expect(result, 1)));
+    final result = await usecase(TodoFilterEntity());
+    expect(result, TodoCountEntity(total: 1));
   });
 
   test('should count 0', () async {
     when(repository.count(TodoFilterEntity()))
-        .thenAnswer((_) => Stream.fromIterable([
-              Left(Failure()),
-            ]));
+        .thenAnswer((_) async => Left(Failure()));
 
-    usecase(TodoFilterEntity())
-        .listen(expectAsync1((result) => expect(result, 0)));
+    final result = await usecase(TodoFilterEntity());
+    expect(result, TodoCountEntity());
   });
 }

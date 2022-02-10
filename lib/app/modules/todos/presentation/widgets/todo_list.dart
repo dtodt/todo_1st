@@ -5,8 +5,8 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 typedef CheckCallback = void Function(String uid, bool checked);
 
 ///
-class TaskList extends StatelessWidget {
-  const TaskList({
+class TodoList extends StatelessWidget {
+  const TodoList({
     Key? key,
     required this.items,
     required this.onItemChecked,

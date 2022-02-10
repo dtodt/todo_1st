@@ -18,8 +18,8 @@ class TodosRepository implements ITodosRepository {
 
   ///
   @override
-  Stream<Either<Failure, int>> count(TodoFilter filter) {
-    return _localDS.count(TodoFilterModel.fromEntity(filter));
+  Future<Either<Failure, TodoCount>> count(TodoFilter filter) async {
+    return await _localDS.count(TodoFilterModel.fromEntity(filter));
   }
 
   ///
@@ -30,8 +30,8 @@ class TodosRepository implements ITodosRepository {
 
   ///
   @override
-  Future<Either<Failure, Todo>> read(String filter) {
-    return _localDS.read(filter);
+  Future<Either<Failure, Todo>> read(String filter) async {
+    return await _localDS.read(filter);
   }
 
   ///

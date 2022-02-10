@@ -11,3 +11,7 @@ final fNewTodoUpdated =
     TodoModel(description: kDescription, uid: kNewUid, done: false);
 
 final TodoEntity fNewTodoEntity = TodoEntity(description: kDescription);
+
+final fFilterBoth = TodoFilterModel(state: TodoState.both);
+final fFilterDone = TodoFilterModel(state: TodoState.done);
+final fFilterTodo = TodoFilterModel(state: TodoState.todo);

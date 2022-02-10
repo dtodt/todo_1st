@@ -24,32 +24,24 @@ void main() {
   });
 
   test('should count 1', () async {
-    when(localDS.count(TodoFilterModel(state: TodoState.both)))
-        .thenAnswer((_) => Stream.value(
-              const Right(1),
-            ));
+    when(localDS.count(fFilterBoth))
+        .thenAnswer((_) async => Right(TodoCountModel()));
 
-    repository
-        .count(TodoFilterEntity())
-        .listen(expectAsync1((result) => expect(result.isRight(), true)));
+    final result = await repository.count(fFilterBoth);
+    expect(result.isRight(), true);
   });
 
   test('should count nothing', () async {
-    when(localDS.count(TodoFilterModel(state: TodoState.both)))
-        .thenAnswer((_) => Stream.value(
-              Left(Failure()),
-            ));
+    when(localDS.count(fFilterBoth)).thenAnswer((_) async => Left(Failure()));
 
-    repository
-        .count(TodoFilterEntity())
-        .listen(expectAsync1((result) => expect(result.isLeft(), true)));
+    final result = await repository.count(fFilterBoth);
+    expect(result.isLeft(), true);
   });
 
   test('should list successfully', () async {
-    when(localDS.list(TodoFilterModel(state: TodoState.both)))
-        .thenAnswer((_) => Stream.value(
-              Right([fTodo]),
-            ));
+    when(localDS.list(fFilterBoth)).thenAnswer((_) => Stream.value(
+          Right([fTodo]),
+        ));
 
     repository
         .list(TodoFilterEntity())
@@ -57,10 +49,9 @@ void main() {
   });
 
   test('should list nothing', () async {
-    when(localDS.list(TodoFilterModel(state: TodoState.both)))
-        .thenAnswer((_) => Stream.value(
-              Left(Failure()),
-            ));
+    when(localDS.list(fFilterBoth)).thenAnswer((_) => Stream.value(
+          Left(Failure()),
+        ));
 
     repository
         .list(TodoFilterEntity())
