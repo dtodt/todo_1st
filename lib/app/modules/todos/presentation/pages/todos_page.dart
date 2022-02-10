@@ -29,7 +29,7 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
             ),
             Expanded(
               child: Container(
-                child: TaskList(
+                child: TodoList(
                   items: cubit.list(state.filter),
                   onItemChecked: cubit.taskDone,
                 ),

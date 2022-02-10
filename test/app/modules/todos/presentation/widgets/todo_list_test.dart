@@ -11,7 +11,7 @@ void main() {
     bool taskChecked = false;
 
     await tester.pumpWidget(FakeScaffoldApp(
-      child: TaskList(
+      child: TodoList(
           items: Stream.value([fTodo]),
           onItemChecked: (uid, checked) {
             taskUid = uid;
@@ -33,7 +33,7 @@ void main() {
     bool taskChecked = false;
 
     await tester.pumpWidget(FakeScaffoldApp(
-      child: TaskList(
+      child: TodoList(
           items: Stream.value([fNewTodoUpdated]),
           onItemChecked: (uid, checked) {
             taskUid = uid;
