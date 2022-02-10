@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 
@@ -20,7 +21,18 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
       bloc: store,
       builder: (_, state) => Scaffold(
         appBar: AppBar(
-          title: Text('${widget.title}'), // [$done ~ $total]
+          title: FutureBuilder<TodoCount>(
+              future: cubit.count(TodoFilterEntity()),
+              builder: (_, snapshot) {
+                if (!snapshot.hasData || snapshot.data!.total == 0) {
+                  return Text(widget.title);
+                }
+
+                final count = snapshot.data;
+                return Text(
+                  '${widget.title} [${count!.done}~${count.total}]',
+                );
+              }), // [$done ~ $total]
         ),
         body: Column(
           children: [
