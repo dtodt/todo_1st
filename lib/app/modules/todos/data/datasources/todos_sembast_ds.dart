@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sembast/sembast.dart';
 import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/data/models/index.dart';
@@ -8,7 +9,10 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 
 import 'i_todos_local_ds.dart';
 
+part 'todos_sembast_ds.g.dart';
+
 ///
+@Injectable(lazy: true, singleton: false)
 class TodosSembastDS implements ITodosLocalDS {
   final Database _db;
   late StoreRef _store;
