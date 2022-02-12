@@ -4,12 +4,14 @@ A clean architecture To-do list experience with Flutter.
 
 ## Dependencies
 
-- Modular - for project standards and dependency injection;
 - BLoC - for state management;
-- dartx - for utilities;
-- dartz - for functional programming;
-- freezed and equatable - for data model handling;
-- uuid - for standard id generation;
+- Dartx - for utilities;
+- Dartz - for functional programming;
+- Freezed - for data model handling;
+- Modular - for project standards, dependency injection and routes;
+- Uuid - for standard id generation;
+- Sembast - for local database;
+- Shared preferences - for preferences storage;
 
 ## Setup the project
 

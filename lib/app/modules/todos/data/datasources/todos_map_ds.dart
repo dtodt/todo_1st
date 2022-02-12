@@ -15,32 +15,26 @@ class TodosMapDS implements ITodosLocalDS {
 
   @override
   Future<Either<Failure, TodoCountModel>> count(TodoFilterModel filter) async {
-    if (_map.isEmpty) {
-      return Left(Failure());
-    } else {
-      return Right(_map.values.fold<TodoCountModel>(
-        TodoCountModel(),
-        (count, todo) {
-          int available = count.available;
-          int done = count.done;
-          int total = count.total + 1;
-          if (todo.done) {
-            done += 1;
-          } else {
-            available += 1;
-          }
-          return count.copyWith(available: available, done: done, total: total);
-        },
-      ));
-    }
+    return Right(_map.values.fold<TodoCountModel>(
+      TodoCountModel(),
+      (count, todo) {
+        int available = count.available;
+        int done = count.done;
+        int total = count.total + 1;
+        if (todo.done) {
+          done += 1;
+        } else {
+          available += 1;
+        }
+        return count.copyWith(available: available, done: done, total: total);
+      },
+    ));
   }
 
   @override
   Stream<Either<Failure, List<TodoModel>>> list(TodoFilterModel filter) {
     Either<Failure, List<TodoModel>> value;
-    if (_map.isEmpty) {
-      value = Left(Failure());
-    } else if (TodoState.both == filter.state) {
+    if (TodoState.both == filter.state) {
       value = Right(_map.values.toList());
     } else {
       final filtered = _map.values.toList().where(
@@ -53,16 +47,16 @@ class TodosMapDS implements ITodosLocalDS {
   }
 
   @override
-  Future<Either<Failure, Unit>> save(TodoModel model) async {
-    _map[model.uid] = model;
-    return const Right(unit);
-  }
-
-  @override
   Future<Either<Failure, TodoModel>> read(String filter) async {
     if (_map.containsKey(filter)) {
       return Right(_map[filter]!);
     }
     return Left(Failure());
+  }
+
+  @override
+  Future<Either<Failure, Unit>> save(TodoModel model) async {
+    _map[model.uid] = model;
+    return const Right(unit);
   }
 }

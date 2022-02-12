@@ -1,20 +1,21 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
 import 'package:todo1st/app/modules/todos/data/models/index.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:uuid/uuid.dart';
+import 'package:todo1st/app/shared/data/datasources/index.dart';
+
+part 'todos_repository.g.dart';
 
 ///
+@Injectable(lazy: true, singleton: false)
 class TodosRepository implements ITodosRepository {
   final ITodosLocalDS _localDS;
-  final Uuid _uuid;
+  final IKeyDS _keyDS;
 
-  const TodosRepository(
-    this._localDS, {
-    Uuid uuid = const Uuid(),
-  }) : _uuid = uuid;
+  const TodosRepository(this._localDS, this._keyDS);
 
   ///
   @override
@@ -44,6 +45,6 @@ class TodosRepository implements ITodosRepository {
   }
 
   String _getUid(String uid) {
-    return uid.isNotEmpty ? uid : _uuid.v1();
+    return uid.isNotEmpty ? uid : _keyDS.getKey();
   }
 }

@@ -18,13 +18,6 @@ void main() {
     );
   });
 
-  test('should count nothing', () async {
-    localDS = const TodosMapDS(map: {});
-
-    final result = await localDS.count(fFilterBoth);
-    expect(result.isLeft(), true);
-  });
-
   test('should list 2, using filter both', () async {
     localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
 
@@ -50,14 +43,6 @@ void main() {
       expect(result.isRight(), true);
       expect(result.getOrElse(() => []).length, 0);
     }));
-  });
-
-  test('should list nothing', () async {
-    localDS = const TodosMapDS(map: {});
-
-    localDS
-        .list(fFilterBoth)
-        .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
   test('should create', () async {

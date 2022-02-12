@@ -7,20 +7,23 @@ import 'package:todo1st/app/modules/todos/data/models/index.dart';
 import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
+import 'package:todo1st/app/shared/data/datasources/index.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../constants/index.dart';
 import '../../../../../mocks/index.dart';
 
 void main() {
+  late IKeyDS keyDS;
   late ITodosLocalDS localDS;
   late ITodosRepository repository;
   late Uuid uuid;
 
   setUpAll(() {
     uuid = MockUuid();
+    keyDS = KeyUuidDS(uuid);
     localDS = MockITodosLocalDS();
-    repository = TodosRepository(localDS, uuid: uuid);
+    repository = TodosRepository(localDS, keyDS);
   });
 
   test('should count 1', () async {
