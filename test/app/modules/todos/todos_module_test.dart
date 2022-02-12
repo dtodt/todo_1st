@@ -1,21 +1,34 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
+import 'package:tekartik_app_flutter_sembast/sembast.dart';
 import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
 import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 import 'package:todo1st/app/modules/todos/todos_module.dart';
+import 'package:todo1st/app/shared/data/datasources/index.dart';
+import 'package:todo1st/app/shared/shared_module.dart';
 
 void main() {
   setUpAll(() {
-    initModule(TodosModule());
+    initModules([
+      SharedModule(),
+      TodosModule(),
+    ], replaceBinds: [
+      Bind<DatabaseFactory>((_) => databaseFactoryMemory, export: true),
+    ]);
   });
 
   testWidgets('should setup all dependencies correctly', (_) async {
+    await Modular.isModuleReady<SharedModule>();
+
+    final keyDS = Modular.get<IKeyDS>();
+    expect(keyDS, isA<KeyUuidDS>());
+
     final localDS = Modular.get<ITodosLocalDS>();
-    expect(localDS, isA<TodosMapDS>());
+    expect(localDS, isA<TodosSembastDS>());
 
     final repository = Modular.get<ITodosRepository>();
     expect(repository, isA<TodosRepository>());
