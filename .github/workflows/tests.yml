@@ -1,18 +1,23 @@
-name: Main
+name: Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Code checkout
+        uses: actions/checkout@v2
       - name: Flutter action
         uses: subosito/flutter-action@v2.3.0
+        with:
+          cache: true
+          cache-key: flutter-cache
+          cache-path: ${{ runner.tool_cache }}/flutter
       - name: Install dependencies
         run: flutter pub get
       - name: Verify formatting
