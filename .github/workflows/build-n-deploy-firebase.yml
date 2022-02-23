@@ -32,7 +32,6 @@ jobs:
       - name: Firebase hosts deploy preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         if: ${{ github.event.workflow_run.event == 'pull_request'}}
-        id: firebase_hosting
         with:
           expires: 5d
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
@@ -42,14 +41,8 @@ jobs:
       - name: Firebase hosts deploy production
         uses: FirebaseExtended/action-hosting-deploy@v0
         if: ${{ github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main'}}
-        id: firebase_hosting
         with:
           channelId: live
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
           projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Check outputs
-        run: |
-          echo urls ${{steps.firebase_hosting.outputs.url}}
-          echo details_url ${{steps.firebase_hosting.outputs.details_url}}
