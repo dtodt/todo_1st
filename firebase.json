@@ -2,7 +2,33 @@
   "hosting": {
     "public": "build/web",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|css|js)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/firebase/*",
+        "destination": "https://firebase.google.com",
+        "type": 302
+      }
+    ],
     "rewrites": [
+      {
+        "source": "/robots.txt",
+        "destination": "/robots.txt"
+      },
+      {
+        "source": "/sitemap{,/**}",
+        "destination": "/sitemap.xml"
+      },
       {
         "source": "**",
         "destination": "/index.html"
