@@ -28,7 +28,7 @@ jobs:
       - name: Generate Code with build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Build web artifact
-        run: flutter build web --no-pub --no-source-maps --no-tree-shake-icons --release
+        run: flutter build web --no-pub --no-tree-shake-icons --release
       - name: Firebase hosts deploy action
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
