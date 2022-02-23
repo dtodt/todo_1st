@@ -49,3 +49,6 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 *.mocks.dart
+
+# configuration files
+lib/firebase_options.dart
