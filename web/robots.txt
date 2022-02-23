@@ -1,0 +1,4 @@
+User-Agent:*
+Allow: /
+
+Sitemap: https://todo-1st.web.app/sitemap.xml
