@@ -50,5 +50,8 @@ app.*.map.json
 *.freezed.dart
 *.mocks.dart
 
-# configuration files
+# Firebase configuration files
 lib/firebase_options.dart
+
+# Robots file is important
+!web/robots.txt
