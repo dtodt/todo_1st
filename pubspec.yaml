@@ -1,5 +1,5 @@
 name: todo1st
-description: A new Flutter project.
+description: A todo app.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -36,6 +36,12 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.4.0
+  firebase_analytics: ^9.1.0
+  firebase_app_check: ^0.0.6+5
+  firebase_core: ^1.12.0
+  firebase_crashlytics: ^2.5.1
+  firebase_remote_config: ^2.0.0
+  firebase_performance: ^0.8.0+5
   json_annotation: ^4.4.0
   sembast: ^3.1.2
   sembast_sqflite: ^2.0.0+1
@@ -66,6 +72,10 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   freezed: 1.1.0
   freezed_annotation: ^1.1.0
+
+  integration_test:
+    sdk: flutter
+
   json_serializable: ^6.1.4
   modular_codegen: ^3.0.3
   modular_test: ^1.0.1+1

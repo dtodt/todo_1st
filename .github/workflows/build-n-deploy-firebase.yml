@@ -1,0 +1,34 @@
+name: BuildDeployFirebase
+
+on:
+  workflow_run:
+    branches: [main]
+    types: [completed]
+    workflows: [Tests]
+
+jobs:
+  build_n_deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Flutter action
+        uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          cache-key: flutter-cache
+          cache-path: ${{ runner.tool_cache }}/flutter
+      - name: Create firebase options file
+        run: echo $FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
+        env:
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+      - name: Build web artifact
+        run: flutter build web --no-pub --no-source-maps --no-tree-shake-icons --release
+      - name: Firebase hosts deploy action
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
+          channelId: live
+          projectId: todo-1st
