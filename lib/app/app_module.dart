@@ -13,16 +13,6 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute(Modular.initialRoute,
-        module: TodosModule(), guards: [AppGuard()]),
+    ModuleRoute(Modular.initialRoute, module: TodosModule()),
   ];
-}
-
-/// TODO find a place to put this guard
-class AppGuard extends RouteGuard {
-  @override
-  Future<bool> canActivate(String path, ModularRoute route) async {
-    await Modular.isModuleReady<AppModule>();
-    return true;
-  }
 }
