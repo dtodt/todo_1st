@@ -13,20 +13,11 @@
         ]
       },
       {
-        "source": "/**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=14400, immutable"
-          }
-        ]
-      },
-      {
         "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css|map|eot|otf|ttf|ttc|woff|woff2|font.css)",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=604800, immutable"
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       }
