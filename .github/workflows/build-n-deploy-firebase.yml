@@ -6,7 +6,7 @@ on:
     workflows: [Tests]
 
 jobs:
-  build_n_deploy:
+  build:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -28,19 +28,61 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Build web artifact
         run: flutter build web --no-pub --no-tree-shake-icons --release --source-maps --web-renderer=html
-
-      - name: Firebase hosts deploy preview
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        if: ${{ github.event.workflow_run.event == 'pull_request'}}
+      - name: Cache build files
+        uses: actions/cache@v2
         with:
+          path: build/web
+          key: cache-build-web-${{ github.run_id }}-${{ hashFiles('build/web/.last_build_id') }}
+          restore-keys: |
+            cache-build-web-${{ github.run_id }}-
+
+  deploy_preview:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+
+    outputs:
+      url: ${{ steps.deploy-preview.outputs.url }}
+      details_url: ${{ steps.deploy-preview.outputs.details_url }}
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Retrieve build files
+        uses: actions/cache@v2
+        with:
+          path: build/web
+          key: cache-build-web-${{ github.run_id }}
+      - name: Firebase hosts deploy
+        id: deploy-preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          channelId: preview-pr
           expires: 5d
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
           projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
 
+  deploy_production:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main'}}
+
+    outputs:
+      url: ${{ steps.deploy-production.outputs.url }}
+      details_url: ${{ steps.deploy-production.outputs.details_url }}
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Retrieve build files
+        uses: actions/cache@v2
+        with:
+          path: build/web
+          key: cache-build-web-${{ github.run_id }}
       - name: Firebase hosts deploy production
+        id: deploy-production
         uses: FirebaseExtended/action-hosting-deploy@v0
-        if: ${{ github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main'}}
         with:
           channelId: live
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
