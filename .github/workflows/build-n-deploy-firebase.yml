@@ -42,8 +42,7 @@ jobs:
     if: ${{ github.event.workflow_run.event == 'pull_request' }}
 
     outputs:
-      url: ${{ steps.deploy-preview.outputs.url }}
-      details_url: ${{ steps.deploy-preview.outputs.details_url }}
+      url: ${{ steps.deploy-preview.outputs.details_url }}
 
     steps:
       - name: Code checkout
@@ -54,10 +53,10 @@ jobs:
           path: build/web
           key: cache-build-web-${{ github.run_id }}
       - name: Firebase hosts deploy
-        id: deploy-preview
         uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy-preview
         with:
-          channelId: preview-pr
+          channelId: pr-${{ github.event.number }}
           expires: 5d
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
           projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
@@ -69,8 +68,7 @@ jobs:
     if: ${{ github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main'}}
 
     outputs:
-      url: ${{ steps.deploy-production.outputs.url }}
-      details_url: ${{ steps.deploy-production.outputs.details_url }}
+      url: ${{ steps.deploy-production.outputs.details_url }}
 
     steps:
       - name: Code checkout
@@ -80,9 +78,9 @@ jobs:
         with:
           path: build/web
           key: cache-build-web-${{ github.run_id }}
-      - name: Firebase hosts deploy production
-        id: deploy-production
+      - name: Firebase hosts deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy-production
         with:
           channelId: live
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
