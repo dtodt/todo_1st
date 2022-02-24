@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:todo1st/app/modules/todos/todos_module.dart';
-import 'package:todo1st/app/shared/shared_module.dart';
+import 'package:todo1st/app/modules/todos/todos_module.dart' deferred as todos;
+import 'package:todo1st/app/shared/shared_module.dart' deferred as shared;
 
 class AppModule extends Module {
   @override
@@ -8,11 +8,11 @@ class AppModule extends Module {
 
   @override
   final List<Module> imports = [
-    SharedModule(),
+    shared.SharedModule(),
   ];
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute(Modular.initialRoute, module: TodosModule()),
+    ModuleRoute(Modular.initialRoute, module: todos.TodosModule()),
   ];
 }
