@@ -5,5 +5,7 @@ import 'app/index.dart' deferred as app;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await app.loadLibrary();
   runApp(ModularApp(module: app.AppModule(), child: app.AppWidget()));
 }
