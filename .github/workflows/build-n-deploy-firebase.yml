@@ -56,7 +56,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy-preview
         with:
-          channelId: preview-pr-${{ github.event.number }}
+          channelId: pr-${{ github.event.number }}
           expires: 5d
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
           projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
