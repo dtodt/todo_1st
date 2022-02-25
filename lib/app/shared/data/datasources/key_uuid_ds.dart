@@ -6,7 +6,7 @@ import 'i_key_ds.dart';
 part 'key_uuid_ds.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: true)
+@Injectable()
 class KeyUuidDS implements IKeyDS {
   final Uuid _uuid;
 
