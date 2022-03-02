@@ -3,8 +3,14 @@ name: Tests
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
 
 jobs:
   test:
@@ -22,7 +28,7 @@ jobs:
         run: flutter pub get
       - name: Verify formatting
         run: flutter format --output=none --set-exit-if-changed .
-      - name: Generate Code with build_runner
+      - name: Generate code with build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Analyze project source
         run: flutter analyze .
