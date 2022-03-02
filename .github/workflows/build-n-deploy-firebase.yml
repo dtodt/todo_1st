@@ -4,6 +4,9 @@ on:
   workflow_run:
     types: [completed]
     workflows: [Tests]
+    paths-ignore:
+      - 'android/**'
+      - 'ios/**'
 
 jobs:
   build:
