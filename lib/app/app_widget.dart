@@ -17,13 +17,15 @@ class AppWidget extends StatelessWidget {
           );
         }
 
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'To-do 1st',
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
-        ).modular();
+          routeInformationParser: Modular.routeInformationParser,
+          routerDelegate: Modular.routerDelegate,
+        );
       },
     );
   }
