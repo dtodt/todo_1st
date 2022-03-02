@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v2
-      - name: Flutter action
+        with:
+          fetch-depth: 0
+      - name: Flutter cache
         uses: subosito/flutter-action@v2
         with:
           cache: true
@@ -24,10 +26,15 @@ jobs:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Install dependencies
         run: flutter pub get
-      - name: Generate Code with build_runner
+      - name: Generate code with build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Build web artifact
         run: flutter build web --no-pub --no-tree-shake-icons --release --source-maps --web-renderer=html
+      - name: Generate sitemap
+        uses: cicirello/generate-sitemap@v1.8.1
+        with:
+          base-url-path: ${{ secrets.FIREBASE_URL }}
+          path-to-root: build/web
       - name: Cache build files
         uses: actions/cache@v2
         with:
@@ -56,8 +63,8 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy-preview
         with:
-          channelId: pr-${{ github.event.number }}
-          expires: 5d
+          channelId: ${{ github.run_id }}
+          expires: 1d
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_1ST }}'
           projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
