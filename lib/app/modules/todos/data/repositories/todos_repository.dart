@@ -10,7 +10,7 @@ import 'package:todo1st/app/shared/data/datasources/index.dart';
 part 'todos_repository.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosRepository implements ITodosRepository {
   final ITodosLocalDS _localDS;
   final IKeyDS _keyDS;

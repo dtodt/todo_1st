@@ -12,7 +12,7 @@ import 'i_todos_local_ds.dart';
 part 'todos_sembast_ds.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosSembastDS implements ITodosLocalDS {
   final Database _db;
   late StoreRef _store;

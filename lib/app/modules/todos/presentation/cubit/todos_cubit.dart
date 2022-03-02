@@ -8,7 +8,7 @@ import 'todos_state.dart';
 part 'todos_cubit.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosCubit extends Cubit<TodosState> {
   final TodosCount _todosCount;
   final TodosList _todosList;

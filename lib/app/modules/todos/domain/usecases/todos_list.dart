@@ -6,7 +6,7 @@ import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 part 'todos_list.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosList with StreamUseCase<List<Todo>, TodoFilter> {
   final ITodosRepository repository;
 

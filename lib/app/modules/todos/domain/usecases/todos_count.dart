@@ -6,7 +6,7 @@ import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 part 'todos_count.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosCount with FutureUseCase<TodoCount, TodoFilter> {
   final ITodosRepository repository;
 

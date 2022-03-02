@@ -8,7 +8,7 @@ import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 part 'todos_read.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosRead with FutureUseCase<Either<Failure, Todo>, String> {
   final ITodosRepository repository;
 

@@ -7,7 +7,7 @@ import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 part 'todos_save.g.dart';
 
 ///
-@Injectable(lazy: true, singleton: false)
+@Injectable(singleton: false)
 class TodosSave with FutureUseCase<Unit, Todo> {
   final ITodosRepository repository;
 
