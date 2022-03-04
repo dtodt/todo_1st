@@ -24,6 +24,10 @@ jobs:
           cache: true
           cache-key: flutter-cache
           cache-path: ${{ runner.tool_cache }}/flutter
+      - name: Create firebase options file
+        run: echo $FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
+        env:
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Install dependencies
         run: flutter pub get
       - name: Verify formatting
