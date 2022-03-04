@@ -27,6 +27,8 @@ linter:
 
 analyzer:
   exclude:
+    - 'lib/firebase_options.dart'
+    - 'lib/firebase_setup.dart'
     - '**/*.g.dart'
     - '**/*.freezed.dart'
     - '**/*.mocks.dart'
