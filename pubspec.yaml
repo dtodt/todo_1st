@@ -23,17 +23,13 @@ dependencies:
     sdk: flutter
 
   bloc: ^8.0.3
-  # cupertino_icons: ^1.0.4
-  # dartx: ^1.0.0
   dartz: ^0.10.1
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.5.0
-  # firebase_analytics: ^9.1.0
-  # firebase_app_check: ^0.0.6+5
+  firebase_analytics: ^9.1.2
   firebase_core: ^1.13.1
-  # firebase_crashlytics: ^2.5.1
+  firebase_crashlytics: ^2.5.3
   # firebase_remote_config: ^2.0.0
-  # firebase_performance: ^0.8.0+5
   json_annotation: ^4.4.0
   sembast: ^3.2.0
   sembast_sqflite: ^2.0.1
