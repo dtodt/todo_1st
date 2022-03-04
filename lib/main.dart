@@ -1,11 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'dart:async';
+
+import 'package:flutter/material.dart' show runApp, WidgetsFlutterBinding;
+import 'package:flutter_modular/flutter_modular.dart' deferred as modular
+    show ModularApp;
 
 import 'app/index.dart' deferred as app;
+import 'firebase_setup.dart' deferred as fb;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await fb.loadLibrary();
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await app.loadLibrary();
-  runApp(ModularApp(module: app.AppModule(), child: app.AppWidget()));
+    await fb.firebaseSetup();
+
+    await modular.loadLibrary();
+    await app.loadLibrary();
+    runApp(modular.ModularApp(module: app.AppModule(), child: app.AppWidget()));
+  }, fb.logOnFirebase);
 }
