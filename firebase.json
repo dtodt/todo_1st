@@ -24,46 +24,6 @@
             "value": "noarchive"
           }
         ]
-      },
-      {
-        "source": "**",
-        "headers": [
-          {
-            "key": "Feature-Policy",
-            "value": "microphone 'none'; geolocation 'none'; camera 'none'"
-          },
-          {
-            "key": "Referrer-Policy",
-            "value": "strict-origin-when-cross-origin"
-          },
-          {
-            "key": "Strict-Transport-Security",
-            "value": "max-age=31536000; includeSubDomains; preload"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "SAMEORIGIN"
-          },
-          {
-            "key": "X-Robots-Tag",
-            "value": "nofollow, noimageindex, noarchive"
-          },
-          {
-            "key": "X-XSS-Protection",
-            "value": "1; mode=block"
-          }
-        ]
-      }
-    ],
-    "redirects": [
-      {
-        "source": "/firebase/*",
-        "destination": "https://firebase.google.com",
-        "type": 302
       }
     ],
     "rewrites": [
