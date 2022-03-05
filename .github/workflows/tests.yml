@@ -17,7 +17,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.head_ref || github.ref, 'refs/heads/buildfix/') }}
+    if: ${{ !startsWith(github.head_ref || github.ref, 'buildfix/') }}
     steps:
       - name: Code checkout
         uses: actions/checkout@v2
