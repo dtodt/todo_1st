@@ -11,6 +11,8 @@ on:
     paths-ignore:
       - '**.md'
       - 'docs/**'
+    branches-ignore:
+      - 'buildfix/**'
 
 jobs:
   test:
@@ -30,6 +32,8 @@ jobs:
           flutter format lib/firebase_options.dart
         env:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+      - name: Check firebase options file
+        run: cat lib/firebase_options.dart
       - name: Verify formatting
         run: flutter format --output=none --set-exit-if-changed .
       - name: Install dependencies
