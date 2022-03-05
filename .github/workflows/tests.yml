@@ -17,13 +17,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.head_ref || github.ref, 'refs/heads/buildfix/') }}
+    if: ${{ !startsWith(github.head_ref || github.ref, 'buildfix/') }}
     steps:
-      - name: Echo refs
-        run: echo "$REF1 and $REF2"
-        env:
-          REF1: ${{ github.ref }}
-          REF2: ${{ github.head_ref }}
       - name: Code checkout
         uses: actions/checkout@v2
       - name: Flutter action
