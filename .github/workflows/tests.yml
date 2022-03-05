@@ -11,12 +11,11 @@ on:
     paths-ignore:
       - '**.md'
       - 'docs/**'
-    branches-ignore:
-      - 'buildfix/**'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref || github.ref, 'refs/heads/buildfix/') }}
     steps:
       - name: Code checkout
         uses: actions/checkout@v2
