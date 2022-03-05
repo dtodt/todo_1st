@@ -76,18 +76,6 @@
         "destination": "/sitemap.xml"
       },
       {
-        "source": "/assets/:path*",
-        "destination": "/assets/:path"
-      },
-      {
-        "source": "/icons/:path*",
-        "destination": "/icons/:path"
-      },
-      {
-        "source": "/splash/:path*",
-        "destination": "/splash/:path"
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
