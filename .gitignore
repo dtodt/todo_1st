@@ -51,6 +51,7 @@ app.*.map.json
 *.mocks.dart
 
 # Firebase configuration files
+.firebase/
 lib/firebase_options.dart
 
 # Robots file is important
