@@ -20,14 +20,14 @@ on:
           - production
 
 # Not yet supported by jobs.<job>.if
-env:
-  IS_AUTOMATION: ${{ github.event_name == 'workflow_run' }}
-  IS_MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
-  IS_RUNNABLE: ${{ (env.IS_AUTOMATION && github.event.workflow_run.conclusion == 'success') || env.IS_MANUAL }}
-  IS_AUTOMATION_PREVIEW: ${{ env.IS_AUTOMATION && github.event.workflow_run.event == 'pull_request' }}
-  IS_MANUAL_PREVIEW: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'preview' }}
-  IS_AUTOMATION_PRODUCTION: ${{ env.IS_AUTOMATION_PREVIEW == false && github.event.workflow_run.head_branch == 'main' }}
-  IS_MANUAL_PRODUCTION: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'production' }}
+# env:
+#   IS_AUTOMATION: ${{ github.event_name == 'workflow_run' }}
+#   IS_MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+#   IS_RUNNABLE: ${{ (env.IS_AUTOMATION && github.event.workflow_run.conclusion == 'success') || env.IS_MANUAL }}
+#   IS_AUTOMATION_PREVIEW: ${{ env.IS_AUTOMATION && github.event.workflow_run.event == 'pull_request' }}
+#   IS_MANUAL_PREVIEW: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'preview' }}
+#   IS_AUTOMATION_PRODUCTION: ${{ env.IS_AUTOMATION_PREVIEW == false && github.event.workflow_run.head_branch == 'main' }}
+#   IS_MANUAL_PRODUCTION: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'production' }}
 
 jobs:
   build:
