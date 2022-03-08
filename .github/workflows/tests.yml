@@ -30,10 +30,11 @@ jobs:
           channel: 'stable'
           flutter-version: '2.10.3'
       - name: Create firebase options file
-        uses: timheuer/base64-to-file@v1.1
-        with:
-          fileName: 'lib/firebase_options.dart'
-          encodedString: ${{ secrets.FIREBASE_OPTIONS }}
+        run: |
+          echo $FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
+          flutter format lib/firebase_options.dart
+        env:
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Verify formatting
         run: flutter format --output=none --set-exit-if-changed .
       - name: Install dependencies
