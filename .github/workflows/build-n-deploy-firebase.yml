@@ -19,13 +19,19 @@ on:
           - preview
           - production
 
+env:
+  IS_AUTOMATION: ${{ github.event_name == 'workflow_run' }}
+  IS_MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+  IS_RUNNABLE: ${{ (env.IS_AUTOMATION && github.event.workflow_run.conclusion == 'success') || env.IS_MANUAL }}
+  IS_AUTOMATION_PREVIEW: ${{ env.IS_AUTOMATION && github.event.workflow_run.event == 'pull_request' }}
+  IS_MANUAL_PREVIEW: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'preview' }}
+  IS_AUTOMATION_PRODUCTION: ${{ env.IS_AUTOMATION_PREVIEW == false && github.event.workflow_run.head_branch == 'main' }}
+  IS_MANUAL_PRODUCTION: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'production' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      IS_AUTOMATION_VALID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
-      IS_MANUAL_EXECUTION: ${{ github.event_name == 'workflow_dispatch' }}
-    if: ${{ env.IS_AUTOMATION_VALID == true || env.IS_MANUAL_EXECUTION == true }}
+    if: ${{ env.IS_RUNNABLE == true }}
 
     steps:
       - name: Code checkout
@@ -66,11 +72,7 @@ jobs:
   deploy_preview:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      IS_MANUAL_PREVIEW: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.targetEnvironment == 'preview' }}
-      # IS_AUTOMATION_PREVIEW: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' }}
     if: ${{ env.IS_MANUAL_PREVIEW == true }}
-    # if: ${{ env.IS_AUTOMATION_PREVIEW == true || env.IS_MANUAL_PREVIEW == true }} # temporary disabled
 
     outputs:
       url: ${{ steps.deploy-preview.outputs.details_url }}
@@ -96,9 +98,6 @@ jobs:
   deploy_production:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      IS_AUTOMATION_PRODUCTION: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main' }}
-      IS_MANUAL_PRODUCTION: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.targetEnvironment == 'production' }}
     if: ${{ env.IS_AUTOMATION_PRODUCTION == true || env.IS_MANUAL_PRODUCTION == true }}
 
     outputs:
