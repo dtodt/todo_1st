@@ -64,7 +64,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
-  json_serializable: ^6.1.4
+  json_serializable: ^6.1.5
   modular_codegen: ^3.0.4
   modular_test: ^1.0.1+1
   mocktail: ^0.3.0
@@ -72,7 +72,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
   assets:
     - images/
 
