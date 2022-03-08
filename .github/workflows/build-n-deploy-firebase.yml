@@ -19,16 +19,6 @@ on:
           - preview
           - production
 
-# Not yet supported by jobs.<job>.if
-# env:
-#   IS_AUTOMATION: ${{ github.event_name == 'workflow_run' }}
-#   IS_MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
-#   IS_RUNNABLE: ${{ (env.IS_AUTOMATION && github.event.workflow_run.conclusion == 'success') || env.IS_MANUAL }}
-#   IS_AUTOMATION_PREVIEW: ${{ env.IS_AUTOMATION && github.event.workflow_run.event == 'pull_request' }}
-#   IS_MANUAL_PREVIEW: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'preview' }}
-#   IS_AUTOMATION_PRODUCTION: ${{ env.IS_AUTOMATION_PREVIEW == false && github.event.workflow_run.head_branch == 'main' }}
-#   IS_MANUAL_PRODUCTION: ${{ env.IS_MANUAL && github.event.inputs.targetEnvironment == 'production' }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,20 +29,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Flutter cache
+      - name: Flutter builder
         uses: subosito/flutter-action@v2
         with:
           cache: true
           cache-key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          cache-path: ${{ env.FLUTTER_HOME }}/.pub-cache
+          cache-path: ${{ runner.tool_cache }}/.pub-cache
           channel: 'stable'
           flutter-version: '2.10.3'
       - name: Create firebase options file
-        run: |
-          echo $FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
-          flutter format lib/firebase_options.dart
-        env:
-          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'lib/firebase_options.dart'
+          encodedString: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Install dependencies
         run: flutter pub get
       - name: Generate code with build_runner

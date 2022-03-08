@@ -21,20 +21,19 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v2
-      - name: Flutter action
+      - name: Flutter builder
         uses: subosito/flutter-action@v2.3.0
         with:
           cache: true
           cache-key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          cache-path: ${{ env.FLUTTER_HOME }}/.pub-cache
+          cache-path: ${{ runner.tool_cache }}/.pub-cache
           channel: 'stable'
           flutter-version: '2.10.3'
       - name: Create firebase options file
-        run: |
-          echo $FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
-          flutter format lib/firebase_options.dart
-        env:
-          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'lib/firebase_options.dart'
+          encodedString: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Verify formatting
         run: flutter format --output=none --set-exit-if-changed .
       - name: Install dependencies
