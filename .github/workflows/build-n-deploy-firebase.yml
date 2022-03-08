@@ -19,6 +19,7 @@ on:
           - preview
           - production
 
+# Not yet supported by jobs.<job>.if
 env:
   IS_AUTOMATION: ${{ github.event_name == 'workflow_run' }}
   IS_MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
@@ -31,7 +32,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ env.IS_RUNNABLE == true }}
+    if: ${{ ( github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' ) || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - name: Code checkout
@@ -72,7 +73,7 @@ jobs:
   deploy_preview:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ env.IS_MANUAL_PREVIEW == true }}
+    if: ${{ github.event.inputs.targetEnvironment == 'preview' }}
 
     outputs:
       url: ${{ steps.deploy-preview.outputs.details_url }}
@@ -98,7 +99,7 @@ jobs:
   deploy_production:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ env.IS_AUTOMATION_PRODUCTION == true || env.IS_MANUAL_PRODUCTION == true }}
+    if: ${{ ( github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_branch == 'main' ) || github.event.inputs.targetEnvironment == 'production' }}
 
     outputs:
       url: ${{ steps.deploy-production.outputs.details_url }}
