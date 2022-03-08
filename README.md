@@ -5,13 +5,11 @@ A clean architecture To-do list experience with Flutter.
 ## Dependencies
 
 - BLoC - for state management;
-- Dartx - for utilities;
 - Dartz - for functional programming;
 - Freezed - for data model handling;
 - Modular - for project standards, dependency injection and routes;
 - Uuid - for standard id generation;
 - Sembast - for local database;
-- Shared preferences - for preferences storage;
 
 ## Setup the project
 
@@ -20,6 +18,9 @@ A clean architecture To-do list experience with Flutter.
 flutter pub get
 # build generated files
 flutter pub run build_runner build --delete-conflicting-outputs
+# rename the file lib/firebase_options_template.dart
+mv lib/firebase_options_template.dart lib/firebase_options.dart
+# fill the environment information of each platform in `lib/firebase_options.dart` with your own firebase project options
 ```
 
 ## Tests
