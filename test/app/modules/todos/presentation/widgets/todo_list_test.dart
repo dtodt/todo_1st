@@ -10,7 +10,7 @@ void main() {
     String taskUid = '';
     bool taskChecked = false;
 
-    await tester.pumpWidget(FakeScaffoldApp(
+    await tester.pumpWidget(FakeSliverApp(
       child: TodoList(
           items: Stream.value([fTodo]),
           onItemChecked: (uid, checked) {
@@ -32,7 +32,7 @@ void main() {
     String taskUid = '';
     bool taskChecked = false;
 
-    await tester.pumpWidget(FakeScaffoldApp(
+    await tester.pumpWidget(FakeSliverApp(
       child: TodoList(
           items: Stream.value([fNewTodoUpdated]),
           onItemChecked: (uid, checked) {

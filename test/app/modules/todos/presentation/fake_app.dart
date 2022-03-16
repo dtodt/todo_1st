@@ -18,6 +18,32 @@ class FakeScaffoldApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: child));
+    return FakeApp(child: Scaffold(body: child));
+  }
+}
+
+class FakeSliverApp extends StatelessWidget {
+  const FakeSliverApp({Key? key, required this.child}) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return FakeScaffoldApp(
+      child: Scaffold(
+        body: SizedBox(
+          child: CustomScrollView(
+            controller: ScrollController(),
+            slivers: <Widget>[
+              SliverPadding(
+                sliver: child,
+                padding: const EdgeInsets.all(0),
+              ),
+            ],
+          ),
+          height: 500,
+        ),
+      ),
+    );
   }
 }

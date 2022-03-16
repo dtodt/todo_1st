@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 
@@ -19,37 +20,50 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
   Widget build(BuildContext context) {
     return BlocBuilder<TodosCubit, TodosState>(
       bloc: store,
-      builder: (_, state) => Scaffold(
-        appBar: AppBar(
-          title: FutureBuilder<TodoCount>(
-              future: cubit.count(TodoFilterEntity()),
-              builder: (_, snapshot) {
-                if (!snapshot.hasData || snapshot.data!.total == 0) {
-                  return Text(widget.title);
-                }
-
-                final count = snapshot.data;
-                return Text(
-                  '${widget.title} [${count!.done}~${count.total}]',
-                );
-              }), // [$done ~ $total]
-        ),
-        body: Column(
-          children: [
-            TaskAddInput(
-              onAddTask: cubit.add,
-            ),
-            Expanded(
-              child: Container(
-                child: TodoList(
-                  items: cubit.list(state.filter),
-                  onItemChecked: cubit.taskDone,
+      builder: (context, state) => Scaffold(
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              expandedHeight: 170,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0),
+                  child: SvgPicture.asset(
+                    'images/todo_logo.svg',
+                    semanticsLabel: 'To-do 1st Logo',
+                  ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                title: FutureBuilder<TodoCount>(
+                  future: cubit.count(TodoFilterEntity()),
+                  builder: (_, snapshot) {
+                    if (!snapshot.hasData || snapshot.data!.total == 0) {
+                      return Text(
+                        widget.title,
+                      );
+                    }
+                    final count = snapshot.data;
+                    return Text(
+                      '${widget.title} [${count!.done}~${count.total}]',
+                    );
+                  },
+                ),
+              ),
+              pinned: true,
+              // snap: true,
+            ),
+            SliverToBoxAdapter(
+              child: TaskAddInput(
+                onAddTask: cubit.add,
               ),
             ),
+            TodoList(
+              items: cubit.list(state.filter),
+              onItemChecked: cubit.taskDone,
+            )
           ],
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
         ),
       ),
     );

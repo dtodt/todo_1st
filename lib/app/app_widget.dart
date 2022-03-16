@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'app_constants.dart';
 import 'app_module.dart';
 
 class AppWidget extends StatelessWidget {
@@ -12,19 +13,35 @@ class AppWidget extends StatelessWidget {
       future: Modular.isModuleReady<AppModule>(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
+          return Container(
+            child: const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+            color: const Color(kPrimaryColor),
+            height: double.infinity,
+            width: double.infinity,
           );
         }
 
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'To-do 1st',
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: ThemeMode.system,
-          routeInformationParser: Modular.routeInformationParser,
+          theme: ThemeData(
+            brightness: Brightness.light,
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              foregroundColor: Colors.white,
+            ),
+            primarySwatch: const MaterialColor(kPrimaryColor, kPrimarySwatch),
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              foregroundColor: Colors.black,
+            ),
+            primarySwatch: const MaterialColor(kPrimaryColor, kPrimarySwatch),
+          ),
           routerDelegate: Modular.routerDelegate,
+          routeInformationParser: Modular.routeInformationParser,
         );
       },
     );

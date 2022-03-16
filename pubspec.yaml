@@ -26,6 +26,7 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^8.0.1
   flutter_modular: ^4.5.0
+  flutter_svg: ^1.0.3
   firebase_analytics: ^9.1.2
   firebase_core: ^1.13.1
   firebase_crashlytics: ^2.5.3
