@@ -21,12 +21,16 @@ class TodoList extends StatelessWidget {
       stream: items,
       builder: (_, AsyncSnapshot<List<Todo>> snapshots) {
         if (!snapshots.hasData) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
+          return const SliverToBoxAdapter(
+            child: Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
           );
         }
-        return ListView.builder(
-          itemBuilder: (_, index) {
+
+        return SliverList(
+            delegate: SliverChildBuilderDelegate(
+          (_, index) {
             final task = snapshots.data![index];
             return CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
@@ -36,8 +40,8 @@ class TodoList extends StatelessWidget {
               onChanged: (checked) => onItemChecked!(task.uid, checked!),
             );
           },
-          itemCount: snapshots.data!.length,
-        );
+          childCount: snapshots.data!.length,
+        ));
       },
     );
   }
