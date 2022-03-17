@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo1st/app/app_constants.dart';
 import 'package:todo1st/app/modules/todos/domain/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
@@ -24,15 +25,28 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              backgroundColor: kPrimaryColor,
+              foregroundColor: Colors.white,
               expandedHeight: 170,
               flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: SvgPicture.asset(
-                    'images/todo_logo.svg',
-                    semanticsLabel: 'To-do 1st Logo',
+                background: DecoratedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: SvgPicture.asset(
+                      'images/todo_logo_alpha.svg',
+                      semanticsLabel: 'To-do 1st Logo',
+                    ),
+                  ),
+                  position: DecorationPosition.background,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[
+                        kPrimaryColor,
+                        Colors.lightBlue,
+                      ],
+                    ),
                   ),
                 ),
                 title: FutureBuilder<TodoCount>(
@@ -41,17 +55,24 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
                     if (!snapshot.hasData || snapshot.data!.total == 0) {
                       return Text(
                         widget.title,
+                        style: kWhiteText,
                       );
                     }
                     final count = snapshot.data;
                     return Text(
                       '${widget.title} [${count!.done}~${count.total}]',
+                      style: kWhiteText,
                     );
                   },
                 ),
+                stretchModes: const <StretchMode>[
+                  StretchMode.zoomBackground,
+                  StretchMode.fadeTitle,
+                  StretchMode.blurBackground,
+                ],
               ),
               pinned: true,
-              // snap: true,
+              stretch: true,
             ),
             SliverToBoxAdapter(
               child: TaskAddInput(
@@ -64,6 +85,10 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
             )
           ],
           // crossAxisAlignment: CrossAxisAlignment.stretch,
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: (() {}),
         ),
       ),
     );
