@@ -16,7 +16,5 @@ void main() {
 
     final database = Modular.get<Database>();
     expect(database, isA<Database>());
-
-    // TODO test guard
   });
 }
