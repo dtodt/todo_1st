@@ -1,7 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
-import 'package:tekartik_app_flutter_sembast/sembast.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_memory.dart';
 import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
 import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
@@ -17,7 +18,7 @@ void main() {
       SharedModule(),
       TodosModule(),
     ], replaceBinds: [
-      Bind<DatabaseFactory>((_) => databaseFactoryMemory, export: true),
+      Bind<DatabaseFactory>((_) => databaseFactoryMemoryFs, export: true),
     ]);
   });
 
