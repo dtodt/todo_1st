@@ -3,6 +3,7 @@ import 'package:sembast_sqflite/sembast_sqflite.dart' deferred as mobile_impl
     show getDatabaseFactorySqflite;
 import 'package:sembast_web/sembast_web.dart' deferred as web;
 import 'package:sqflite/sqflite.dart' deferred as mobile show databaseFactory;
+import 'package:todo1st/app/app_constants.dart';
 
 class SembastService {
   Future<DatabaseFactory> getFactory(bool isWeb) async {
@@ -17,7 +18,18 @@ class SembastService {
   }
 
   Future<Database> openDatabase(DatabaseFactory factory) async {
-    // TODO: implement openDatabase
-    throw UnimplementedError();
+    return factory.openDatabase(
+      kTodosLocalDatabase,
+      onVersionChanged: _onVersionChanged,
+      version: 1,
+    );
+  }
+
+  Future<dynamic> _onVersionChanged(
+    Database db,
+    int oldVersion,
+    int newVersion,
+  ) async {
+    /// TODO make sure to migrate data when the structure changes
   }
 }
