@@ -15,7 +15,7 @@ void main() {
     keyDS = KeyUuidDS(uuid);
   });
 
-  testWidgets('key uuid ds should return a key when asked', (tester) async {
+  test('key uuid ds should return a key when asked', () async {
     when(uuid.v1()).thenReturn(kNewUid);
     expect(keyDS.getKey(), kNewUid);
   });
