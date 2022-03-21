@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:tekartik_app_flutter_sembast/sembast.dart';
+import 'package:sembast/sembast.dart';
 import 'package:todo1st/app/shared/data/services/index.dart';
 
 class SharedModule extends Module {
