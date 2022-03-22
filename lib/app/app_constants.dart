@@ -35,3 +35,6 @@ const FloatingActionButtonThemeData kFloatingActionButtonTheme =
 );
 
 const TextStyle kWhiteText = TextStyle(color: Colors.white);
+
+const int kCancelColorValue = 0xFFA62E2E;
+const Color kCancelColor = Color(kCancelColorValue);
