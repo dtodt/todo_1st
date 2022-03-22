@@ -28,12 +28,12 @@ class TodosSembastDS implements ITodosLocalDS {
   Future<Either<Failure, TodoCountModel>> count(TodoFilterModel filter) async {
     final int available = await _store.count(_db, filter: availableFilter);
     final int done = await _store.count(_db, filter: doneFilter);
-    final int total = await _store.count(_db);
+    final int all = await _store.count(_db);
 
     return Right(TodoCountModel(
+      all: all,
       available: available,
       done: done,
-      total: total,
     ));
   }
 
@@ -43,7 +43,7 @@ class TodosSembastDS implements ITodosLocalDS {
     if (TodoState.done == filter.state) {
       dbFilter = doneFilter;
     }
-    if (TodoState.todo == filter.state) {
+    if (TodoState.available == filter.state) {
       dbFilter = availableFilter;
     }
 

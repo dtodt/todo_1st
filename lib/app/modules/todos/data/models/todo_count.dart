@@ -8,9 +8,9 @@ part 'todo_count.g.dart';
 @freezed
 class TodoCountModel with _$TodoCountModel implements TodoCount {
   factory TodoCountModel({
+    @Default(0) int all,
     @Default(0) int available,
     @Default(0) int done,
-    @Default(0) int total,
   }) = _TodoCountModel;
 
   factory TodoCountModel.fromJson(Map<String, dynamic> json) =>
