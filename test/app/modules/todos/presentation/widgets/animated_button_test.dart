@@ -21,7 +21,7 @@ void main() {
   testWidgets('should change its color when the controller animates',
       (tester) async {
     await tester.pumpWidget(FakeScaffoldApp(
-      child: AnimatedAddCancelButton(
+      child: AnimatedButton(
         animationController: controller,
         onPressed: () {},
       ),
@@ -43,7 +43,7 @@ void main() {
     bool wasPressed = false;
 
     await tester.pumpWidget(FakeScaffoldApp(
-      child: AnimatedAddCancelButton(
+      child: AnimatedButton(
         animationController: controller,
         onPressed: () {
           wasPressed = true;

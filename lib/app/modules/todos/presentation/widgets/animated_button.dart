@@ -5,22 +5,21 @@ import 'package:todo1st/app/app_constants.dart';
 
 /// This button changes from add to cancel,
 /// with blue and red colors respectively.
-class AnimatedAddCancelButton extends StatefulWidget {
+class AnimatedButton extends StatefulWidget {
   final AnimationController animationController;
   final VoidCallback? onPressed;
 
-  const AnimatedAddCancelButton({
+  const AnimatedButton({
     Key? key,
     required this.animationController,
     required this.onPressed,
   }) : super(key: key);
 
   @override
-  State<AnimatedAddCancelButton> createState() =>
-      _AnimatedAddCancelButtonState();
+  State<AnimatedButton> createState() => _AnimatedButtonState();
 }
 
-class _AnimatedAddCancelButtonState extends State<AnimatedAddCancelButton> {
+class _AnimatedButtonState extends State<AnimatedButton> {
   late Animation<Color?> _animation;
 
   double _angle = 0;
@@ -43,7 +42,7 @@ class _AnimatedAddCancelButtonState extends State<AnimatedAddCancelButton> {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
+      builder: (context, _) {
         return FloatingActionButton(
           backgroundColor: _animation.value,
           child: Transform.rotate(
