@@ -33,6 +33,7 @@ class AnimatedTray extends StatelessWidget {
       builder: (context, _) {
         return Opacity(
           child: Card(
+            child: child,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
