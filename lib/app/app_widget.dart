@@ -17,7 +17,7 @@ class AppWidget extends StatelessWidget {
             child: const Center(
               child: CircularProgressIndicator.adaptive(),
             ),
-            color: const Color(kPrimaryColor),
+            color: const Color(kPrimaryColorValue),
             height: double.infinity,
             width: double.infinity,
           );
@@ -28,17 +28,13 @@ class AppWidget extends StatelessWidget {
           title: 'To-do 1st',
           theme: ThemeData(
             brightness: Brightness.light,
-            floatingActionButtonTheme: const FloatingActionButtonThemeData(
-              foregroundColor: Colors.white,
-            ),
-            primarySwatch: const MaterialColor(kPrimaryColor, kPrimarySwatch),
+            floatingActionButtonTheme: kFloatingActionButtonTheme,
+            primarySwatch: kPrimaryColor,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            floatingActionButtonTheme: const FloatingActionButtonThemeData(
-              foregroundColor: Colors.black,
-            ),
-            primarySwatch: const MaterialColor(kPrimaryColor, kPrimarySwatch),
+            floatingActionButtonTheme: kFloatingActionButtonTheme,
+            primarySwatch: kPrimaryColor,
           ),
           routerDelegate: Modular.routerDelegate,
           routeInformationParser: Modular.routeInformationParser,

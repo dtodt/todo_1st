@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
-import 'package:tekartik_app_flutter_sembast/sembast.dart';
 import 'package:todo1st/app/modules/todos/presentation/pages/index.dart';
 import 'package:todo1st/app/modules/todos/todos_module.dart';
+import 'package:todo1st/app/shared/data/services/index.dart';
 import 'package:todo1st/app/shared/shared_module.dart';
 
 import '../../../../../constants/index.dart';
+import '../../../../../overrides/index.dart';
 import '../fake_app.dart';
 
 void main() {
@@ -16,7 +17,10 @@ void main() {
       SharedModule(),
       TodosModule(),
     ], replaceBinds: [
-      Bind<DatabaseFactory>((_) => databaseFactoryMemory, export: true),
+      Bind<SembastService>(
+        (_) => SembastServiceTester(),
+        export: true,
+      ),
     ]);
   });
 
@@ -28,15 +32,21 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextFormField), kDescription);
+    final buttonFinder = find.byType(FloatingActionButton);
+    final fieldFinder = find.byType(TextFormField);
+    final textFinder = find.text(kDescription);
+
+    await tester.tap(buttonFinder);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(IconButton));
+    await tester.showKeyboard(fieldFinder);
+    await tester.enterText(fieldFinder, kDescription);
+    await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
 
-    expect(find.text(kDescription), findsOneWidget);
+    expect(textFinder, findsOneWidget);
 
-    await tester.tap(find.text(kDescription));
+    await tester.tap(textFinder);
     await tester.pumpAndSettle();
   });
 }

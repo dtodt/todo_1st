@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:todo1st/app/modules/todos/domain/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 
@@ -21,49 +19,28 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
     return BlocBuilder<TodosCubit, TodosState>(
       bloc: store,
       builder: (context, state) => Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              expandedHeight: 170,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: SvgPicture.asset(
-                    'images/todo_logo.svg',
-                    semanticsLabel: 'To-do 1st Logo',
-                  ),
-                ),
-                title: FutureBuilder<TodoCount>(
-                  future: cubit.count(TodoFilterEntity()),
-                  builder: (_, snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.total == 0) {
-                      return Text(
-                        widget.title,
-                      );
-                    }
-                    final count = snapshot.data;
-                    return Text(
-                      '${widget.title} [${count!.done}~${count.total}]',
-                    );
-                  },
-                ),
+        body: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  TodoAppBar(widget.title),
+                  TodoList(
+                    items: cubit.list(state.filter),
+                    onItemChecked: cubit.taskDone,
+                  )
+                ],
               ),
-              pinned: true,
-              // snap: true,
             ),
-            SliverToBoxAdapter(
-              child: TaskAddInput(
+            Positioned(
+              bottom: 0,
+              child: TodoAddInput(
                 onAddTask: cubit.add,
               ),
+              left: 0,
+              right: 0,
             ),
-            TodoList(
-              items: cubit.list(state.filter),
-              onItemChecked: cubit.taskDone,
-            )
           ],
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
         ),
       ),
     );

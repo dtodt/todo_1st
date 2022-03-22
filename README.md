@@ -1,6 +1,10 @@
 # To-Do 1st
 
+[![Test Status][test-status]][test-log] [![Hosting Status][hosting-status]][hosting-log]
+
 A clean architecture To-do list experience with Flutter.
+
+> Check it live: [site]
 
 ## Dependencies
 
@@ -35,3 +39,9 @@ lcov --remove ./coverage/lcov.info '**/*.g.dart' '**/*_model.dart' -o coverage/c
 # generate html reports for coverage
 genhtml ./coverage/c_lcov.info -o coverage/html
 ```
+
+[site]: https://todo-1st.web.app/
+[test-log]: https://github.com/dtodt/todo_1st/actions/workflows/tests.yml
+[test-status]: https://github.com/dtodt/todo_1st/actions/workflows/tests.yml/badge.svg
+[hosting-log]: https://github.com/dtodt/todo_1st/actions/workflows/build-n-deploy-firebase.yml
+[hosting-status]: https://github.com/dtodt/todo_1st/actions/workflows/build-n-deploy-firebase.yml/badge.svg
