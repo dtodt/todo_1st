@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 
 import '../../../../../constants/index.dart';
-import '../fake_app.dart';
+import '../../../../../overrides/index.dart';
 
 void main() {
   testWidgets('should accept a text and emit it when the field is submited',

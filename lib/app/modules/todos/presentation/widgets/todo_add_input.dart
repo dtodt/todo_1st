@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
+import 'package:todo1st/app/shared/presentation/widgets/index.dart';
 
 /// Signature of this widget callbacks.
 typedef StringCallback = void Function(String text);

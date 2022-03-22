@@ -9,7 +9,6 @@ import 'package:todo1st/app/shared/shared_module.dart';
 
 import '../../../../../constants/index.dart';
 import '../../../../../overrides/index.dart';
-import '../fake_app.dart';
 
 void main() {
   setUpAll(() {
