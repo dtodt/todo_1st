@@ -11,7 +11,7 @@ void main() {
     String taskDescription = '';
 
     await tester.pumpWidget(FakeScaffoldApp(
-      child: TaskAddInput(
+      child: TodoAddInput(
         onAddTask: (description) => taskDescription = description,
       ),
     ));

@@ -34,7 +34,7 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
             ),
             Positioned(
               bottom: 0,
-              child: TaskAddInput(
+              child: TodoAddInput(
                 onAddTask: cubit.add,
               ),
               left: 0,

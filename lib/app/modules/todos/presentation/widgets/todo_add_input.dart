@@ -5,8 +5,8 @@ import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 typedef StringCallback = void Function(String text);
 
 ///
-class TaskAddInput extends StatefulWidget {
-  const TaskAddInput({
+class TodoAddInput extends StatefulWidget {
+  const TodoAddInput({
     Key? key,
     required this.onAddTask,
   }) : super(key: key);
@@ -14,10 +14,10 @@ class TaskAddInput extends StatefulWidget {
   final StringCallback? onAddTask;
 
   @override
-  State<TaskAddInput> createState() => _TaskAddInputState();
+  State<TodoAddInput> createState() => _TodoAddInputState();
 }
 
-class _TaskAddInputState extends State<TaskAddInput>
+class _TodoAddInputState extends State<TodoAddInput>
     with SingleTickerProviderStateMixin {
   final textController = TextEditingController();
   final textFocusNode = FocusNode();
