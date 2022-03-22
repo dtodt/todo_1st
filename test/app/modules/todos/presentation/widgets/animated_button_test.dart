@@ -5,17 +5,13 @@ import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 import '../fake_app.dart';
 
 void main() {
-  late final AnimationController controller;
-
-  setUp(() {
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 100),
-      vsync: const TestVSync(),
-    );
-  });
+  final AnimationController controller = AnimationController(
+    duration: const Duration(milliseconds: 100),
+    vsync: const TestVSync(),
+  );
 
   tearDown(() {
-    controller.dispose();
+    controller.reset();
   });
 
   testWidgets('should change its color when the controller animates',

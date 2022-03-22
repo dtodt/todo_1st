@@ -19,24 +19,28 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
     return BlocBuilder<TodosCubit, TodosState>(
       bloc: store,
       builder: (context, state) => Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            TodoAppBar(widget.title),
-            SliverToBoxAdapter(
+        body: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  TodoAppBar(widget.title),
+                  TodoList(
+                    items: cubit.list(state.filter),
+                    onItemChecked: cubit.taskDone,
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
               child: TaskAddInput(
                 onAddTask: cubit.add,
               ),
+              left: 0,
+              right: 0,
             ),
-            TodoList(
-              items: cubit.list(state.filter),
-              onItemChecked: cubit.taskDone,
-            )
           ],
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: (() {}),
         ),
       ),
     );

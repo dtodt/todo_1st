@@ -32,15 +32,21 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextFormField), kDescription);
+    final buttonFinder = find.byType(FloatingActionButton);
+    final fieldFinder = find.byType(TextFormField);
+    final textFinder = find.text(kDescription);
+
+    await tester.tap(buttonFinder);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(IconButton));
+    await tester.showKeyboard(fieldFinder);
+    await tester.enterText(fieldFinder, kDescription);
+    await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
 
-    expect(find.text(kDescription), findsOneWidget);
+    expect(textFinder, findsOneWidget);
 
-    await tester.tap(find.text(kDescription));
+    await tester.tap(textFinder);
     await tester.pumpAndSettle();
   });
 }

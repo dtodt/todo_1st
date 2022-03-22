@@ -6,25 +6,6 @@ import '../../../../../constants/index.dart';
 import '../fake_app.dart';
 
 void main() {
-  testWidgets('should accept a text and emit it when the button is pressed',
-      (tester) async {
-    String taskDescription = '';
-
-    await tester.pumpWidget(FakeScaffoldApp(
-      child: TaskAddInput(
-        onAddTask: (description) => taskDescription = description,
-      ),
-    ));
-
-    await tester.enterText(find.byType(TextFormField), kDescription);
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byType(IconButton));
-    await tester.pumpAndSettle();
-
-    expect(taskDescription, kDescription);
-  });
-
   testWidgets('should accept a text and emit it when the field is submited',
       (tester) async {
     String taskDescription = '';
@@ -35,7 +16,11 @@ void main() {
       ),
     ));
 
+    final buttonFinder = find.byType(FloatingActionButton);
     final fieldFinder = find.byType(TextFormField);
+
+    await tester.tap(buttonFinder);
+    await tester.pumpAndSettle();
 
     await tester.showKeyboard(fieldFinder);
     await tester.enterText(fieldFinder, kDescription);
