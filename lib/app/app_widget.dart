@@ -30,11 +30,13 @@ class AppWidget extends StatelessWidget {
             brightness: Brightness.light,
             floatingActionButtonTheme: kFloatingActionButtonTheme,
             primarySwatch: kPrimaryColor,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             floatingActionButtonTheme: kFloatingActionButtonTheme,
             primarySwatch: kPrimaryColor,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           routerDelegate: Modular.routerDelegate,
           routeInformationParser: Modular.routeInformationParser,
