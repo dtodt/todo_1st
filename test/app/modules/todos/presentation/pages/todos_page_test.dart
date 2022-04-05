@@ -31,7 +31,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    final buttonFinder = find.byType(FloatingActionButton);
+    final buttonFinder = find.byType(FloatingActionButton).first;
     final fieldFinder = find.byType(TextFormField);
     final textFinder = find.text(kDescription);
 

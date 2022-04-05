@@ -16,7 +16,7 @@ void main() {
       ),
     ));
 
-    final buttonFinder = find.byType(FloatingActionButton);
+    final buttonFinder = find.byType(FloatingActionButton).first;
     final fieldFinder = find.byType(TextFormField);
 
     await tester.tap(buttonFinder);
