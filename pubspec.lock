@@ -238,28 +238,28 @@ packages:
       name: firebase_analytics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.1.2"
+    version: "9.1.4"
   firebase_analytics_platform_interface:
     dependency: transitive
     description:
       name: firebase_analytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   firebase_analytics_web:
     dependency: transitive
     description:
       name: firebase_analytics_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+8"
+    version: "0.4.0+9"
   firebase_core:
     dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.13.1"
+    version: "1.14.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -280,35 +280,35 @@ packages:
       name: firebase_crashlytics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.3"
+    version: "2.6.1"
   firebase_crashlytics_platform_interface:
     dependency: transitive
     description:
       name: firebase_crashlytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.1"
+    version: "3.2.2"
   firebase_remote_config:
     dependency: "direct main"
     description:
       name: firebase_remote_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   firebase_remote_config_platform_interface:
     dependency: transitive
     description:
       name: firebase_remote_config_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   firebase_remote_config_web:
     dependency: transitive
     description:
       name: firebase_remote_config_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.7"
+    version: "1.0.8"
   fixnum:
     dependency: transitive
     description:
@@ -346,7 +346,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.0"
+    version: "4.5.1+1"
   flutter_modular_annotations:
     dependency: transitive
     description:
@@ -534,7 +534,7 @@ packages:
       name: modular_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   modular_interfaces:
     dependency: transitive
     description:
@@ -548,7 +548,7 @@ packages:
       name: modular_test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1+1"
+    version: "1.0.1+2"
   nested:
     dependency: transitive
     description:
