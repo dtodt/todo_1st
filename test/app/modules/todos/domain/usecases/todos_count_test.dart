@@ -19,10 +19,10 @@ void main() {
 
   test('should count 1', () async {
     when(repository.count(TodoFilterEntity()))
-        .thenAnswer((_) async => Right(TodoCountEntity(total: 1)));
+        .thenAnswer((_) async => Right(TodoCountEntity(all: 1)));
 
     final result = await usecase(TodoFilterEntity());
-    expect(result, TodoCountEntity(total: 1));
+    expect(result, TodoCountEntity(all: 1));
   });
 
   test('should count 0', () async {

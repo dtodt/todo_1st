@@ -10,18 +10,18 @@ void main() {
   test('should count sucessfully', () async {
     localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
 
-    final result = await localDS.count(fFilterBoth);
+    final result = await localDS.count(fFilterAll);
     expect(result.isRight(), true);
     expect(
       result.getOrElse(() => TodoCountModel()),
-      TodoCountModel(available: 1, done: 1, total: 2),
+      TodoCountModel(available: 1, done: 1, all: 2),
     );
   });
 
   test('should list 2, using filter both', () async {
     localDS = TodosMapDS(map: {kUid: fTodo, kNewUid: fNewTodoUpdated});
 
-    localDS.list(fFilterBoth).listen(expectAsync1((result) {
+    localDS.list(fFilterAll).listen(expectAsync1((result) {
       expect(result.isRight(), true);
       expect(result.getOrElse(() => []).length, 2);
     }));
@@ -39,7 +39,7 @@ void main() {
   test('should list 0, using filter todo', () async {
     localDS = TodosMapDS(map: {kUid: fTodo});
 
-    localDS.list(fFilterTodo).listen(expectAsync1((result) {
+    localDS.list(fFilterAvailable).listen(expectAsync1((result) {
       expect(result.isRight(), true);
       expect(result.getOrElse(() => []).length, 0);
     }));

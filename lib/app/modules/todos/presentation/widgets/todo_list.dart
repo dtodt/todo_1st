@@ -19,13 +19,9 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Todo>>(
       stream: items,
-      builder: (_, AsyncSnapshot<List<Todo>> snapshots) {
-        if (!snapshots.hasData) {
-          return const SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          );
+      builder: (context, AsyncSnapshot<List<Todo>> snapshots) {
+        if (!snapshots.hasData || snapshots.data!.isEmpty) {
+          return DataFallback(loading: !snapshots.hasData);
         }
 
         return SliverList(
@@ -43,6 +39,32 @@ class TodoList extends StatelessWidget {
           childCount: snapshots.data!.length,
         ));
       },
+    );
+  }
+}
+
+/// Widget to use when the data is not present
+class DataFallback extends StatelessWidget {
+  final bool loading;
+
+  const DataFallback({
+    Key? key,
+    required this.loading,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Center(
+        child: loading
+            ? const CircularProgressIndicator.adaptive()
+            : const Icon(
+                Icons.playlist_add,
+                color: Colors.white30,
+                size: 64,
+              ),
+      ),
     );
   }
 }

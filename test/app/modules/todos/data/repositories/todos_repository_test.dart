@@ -27,22 +27,22 @@ void main() {
   });
 
   test('should count 1', () async {
-    when(localDS.count(fFilterBoth))
+    when(localDS.count(fFilterAll))
         .thenAnswer((_) async => Right(TodoCountModel()));
 
-    final result = await repository.count(fFilterBoth);
+    final result = await repository.count(fFilterAll);
     expect(result.isRight(), true);
   });
 
   test('should count nothing', () async {
-    when(localDS.count(fFilterBoth)).thenAnswer((_) async => Left(Failure()));
+    when(localDS.count(fFilterAll)).thenAnswer((_) async => Left(Failure()));
 
-    final result = await repository.count(fFilterBoth);
+    final result = await repository.count(fFilterAll);
     expect(result.isLeft(), true);
   });
 
   test('should list successfully', () async {
-    when(localDS.list(fFilterBoth)).thenAnswer((_) => Stream.value(
+    when(localDS.list(fFilterAll)).thenAnswer((_) => Stream.value(
           Right([fTodo]),
         ));
 
@@ -52,7 +52,7 @@ void main() {
   });
 
   test('should list nothing', () async {
-    when(localDS.list(fFilterBoth)).thenAnswer((_) => Stream.value(
+    when(localDS.list(fFilterAll)).thenAnswer((_) => Stream.value(
           Left(Failure()),
         ));
 

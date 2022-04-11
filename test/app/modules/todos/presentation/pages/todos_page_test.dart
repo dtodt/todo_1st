@@ -9,7 +9,6 @@ import 'package:todo1st/app/shared/shared_module.dart';
 
 import '../../../../../constants/index.dart';
 import '../../../../../overrides/index.dart';
-import '../fake_app.dart';
 
 void main() {
   setUpAll(() {
@@ -32,7 +31,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    final buttonFinder = find.byType(FloatingActionButton);
+    final buttonFinder = find.byType(FloatingActionButton).first;
     final fieldFinder = find.byType(TextFormField);
     final textFinder = find.text(kDescription);
 

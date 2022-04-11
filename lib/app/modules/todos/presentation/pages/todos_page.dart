@@ -45,14 +45,4 @@ class TodosPageState extends ModularState<TodosPage, TodosCubit> {
       ),
     );
   }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

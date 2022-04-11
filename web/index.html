@@ -170,6 +170,14 @@
         scriptTag.type = 'application/javascript'
         document.body.append(scriptTag)
       }
+      function cleanCache() {
+        console.debug('Cleaning cache.')
+        return Promise.all([
+          caches.delete('flutter-app-manifest'),
+          caches.delete('flutter-temp-cache'),
+          caches.delete('flutter-app-cache'),
+        ])
+      }
 
       if ('serviceWorker' in navigator) {
         // Service workers are supported. Use them.
@@ -183,7 +191,7 @@
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener('statechange', () => {
                 if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.')
+                  console.debug('Installed new service worker.')
                   loadMainDartJs()
                 }
               })
@@ -195,12 +203,15 @@
             } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
               // When the app updates the serviceWorkerVersion changes, so we
               // need to ask the service worker to update.
-              console.log('New service worker available.')
-              reg.update()
-              waitForActivation(reg.installing)
+              console.debug('New service worker available.')
+              cleanCache().then(() => {
+                console.debug('Cache cleaned.')
+                reg.update()
+                waitForActivation(reg.installing)
+              })
             } else {
               // Existing service worker is still good.
-              console.log('Loading app from service worker.')
+              console.debug('Loading app from service worker.')
               loadMainDartJs()
             }
           })

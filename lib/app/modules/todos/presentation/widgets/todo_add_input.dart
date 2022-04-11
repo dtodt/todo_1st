@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
+import 'package:todo1st/app/app_constants.dart';
+import 'package:todo1st/app/shared/presentation/widgets/index.dart';
 
 /// Signature of this widget callbacks.
 typedef StringCallback = void Function(String text);
@@ -25,6 +26,7 @@ class _TodoAddInputState extends State<TodoAddInput>
   late final AnimationController _controller;
 
   bool canAdd = false;
+  bool showAdd = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +39,11 @@ class _TodoAddInputState extends State<TodoAddInput>
             Positioned.fill(
               child: AnimatedTray(
                 animationController: _controller,
-                child: TextFormField(
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 20, bottom: 16, top: 16, right: 64),
-                  ),
+                child: TodoInput(
                   controller: textController,
-                  enabled: checkCanAdd(),
+                  enabled: _checkCanAdd(),
                   focusNode: textFocusNode,
-                  onFieldSubmitted: (_) => returnAndClear(),
+                  onFieldSubmitted: (_) => _returnAndClear(),
                 ),
               ),
             ),
@@ -59,11 +51,20 @@ class _TodoAddInputState extends State<TodoAddInput>
               bottom: 0,
               child: AnimatedButton(
                 animationController: _controller,
-                onPressed: () => AnimationStatus.completed == _controller.status
-                    ? _controller.reverse()
-                    : _controller.forward(),
+                onPressed: onButtonClick,
               ),
               right: 4,
+              top: 0,
+            ),
+            Positioned(
+              bottom: 0,
+              child: TodoAdd(
+                enabled: _checkAddEnabled(),
+                duration: _controller.duration!,
+                onPressed: _returnAndClear,
+                visible: showAdd,
+              ),
+              left: 4,
               top: 0,
             )
           ],
@@ -89,29 +90,119 @@ class _TodoAddInputState extends State<TodoAddInput>
 
     textController.addListener(() {
       setState(() {
-        canAdd = checkAddEnabled();
+        canAdd = _checkAddEnabled();
       });
     });
   }
 
-  bool checkCanAdd() {
+  bool _checkCanAdd() {
     return widget.onAddTask != null;
   }
 
-  bool checkAddEnabled() {
-    return checkCanAdd() && textController.text.isNotEmpty;
+  bool _checkAddEnabled() {
+    return _checkCanAdd() && textController.text.isNotEmpty;
   }
 
-  void returnAndClear() {
-    if (checkAddEnabled()) {
+  /// ? Not sure why yet, but calling focus directly disables typing, until the field is touched again
+  Future<dynamic> _textInputFocus() =>
+      Future.delayed(const Duration(milliseconds: 200))
+          .then((_) => textFocusNode.requestFocus());
+
+  void onButtonClick() {
+    final willHide = AnimationStatus.completed == _controller.status;
+    willHide ? _controller.reverse() : _controller.forward();
+
+    setState(() {
+      showAdd = !willHide;
+    });
+
+    if (willHide) {
+      textController.clear();
+    } else {
+      _textInputFocus();
+    }
+  }
+
+  void _returnAndClear() {
+    if (_checkAddEnabled()) {
       widget.onAddTask!(textController.text);
     }
 
     textController.clear();
 
-    /// ? Not sure why yet, but calling focus directly disables typing
-    ///   until the field is touched again
-    Future.delayed(const Duration(milliseconds: 200))
-        .then((_) => textFocusNode.requestFocus());
+    _textInputFocus();
+  }
+}
+
+/// Separated is easy to read
+class TodoAdd extends StatelessWidget {
+  final bool enabled;
+  final Duration duration;
+  final VoidCallback onPressed;
+  final bool visible;
+
+  const TodoAdd({
+    Key? key,
+    required this.enabled,
+    required this.duration,
+    required this.onPressed,
+    required this.visible,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: visible ? 1 : 0,
+      duration: duration,
+      child: FloatingActionButton.extended(
+        backgroundColor: enabled ? kPrimaryColor : Colors.grey,
+        label: const Text('Add'),
+        onPressed: enabled ? onPressed : null,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50.0),
+            bottomLeft: Radius.circular(50.0),
+            topRight: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Separated is easy to read
+class TodoInput extends StatelessWidget {
+  final bool enabled;
+  final ValueChanged<String>? onFieldSubmitted;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+
+  const TodoInput({
+    Key? key,
+    required this.enabled,
+    required this.onFieldSubmitted,
+    required this.controller,
+    required this.focusNode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      autofocus: true,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        contentPadding:
+            EdgeInsets.only(left: 80, bottom: 15, top: 17, right: 64),
+      ),
+      controller: controller,
+      enabled: enabled,
+      focusNode: focusNode,
+      onFieldSubmitted: onFieldSubmitted,
+    );
   }
 }

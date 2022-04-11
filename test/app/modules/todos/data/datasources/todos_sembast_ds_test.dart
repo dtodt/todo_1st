@@ -33,11 +33,11 @@ void main() {
     await store.record(kUid).put(database, fTodo.toJson());
     await store.record(kNewUid).put(database, fNewTodoUpdated.toJson());
 
-    final result = await localDS.count(fFilterBoth);
+    final result = await localDS.count(fFilterAll);
     expect(result.isRight(), true);
     expect(
       result.getOrElse(() => TodoCountModel()),
-      TodoCountModel(available: 1, done: 1, total: 2),
+      TodoCountModel(available: 1, done: 1, all: 2),
     );
   });
 
@@ -45,7 +45,7 @@ void main() {
     await store.record(kUid).put(database, fTodo.toJson());
     await store.record(kNewUid).put(database, fNewTodoUpdated.toJson());
 
-    final result = await localDS.list(fFilterBoth).first;
+    final result = await localDS.list(fFilterAll).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 2);
   });
@@ -62,7 +62,7 @@ void main() {
   test('should list 0, using filter todo', () async {
     await store.record(kUid).put(database, fTodo.toJson());
 
-    final result = await localDS.list(fFilterTodo).first;
+    final result = await localDS.list(fFilterAvailable).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 0);
   });

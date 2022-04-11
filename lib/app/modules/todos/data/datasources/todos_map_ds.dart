@@ -20,13 +20,13 @@ class TodosMapDS implements ITodosLocalDS {
       (count, todo) {
         int available = count.available;
         int done = count.done;
-        int total = count.total + 1;
+        int all = count.all + 1;
         if (todo.done) {
           done += 1;
         } else {
           available += 1;
         }
-        return count.copyWith(available: available, done: done, total: total);
+        return count.copyWith(available: available, done: done, all: all);
       },
     ));
   }
@@ -34,7 +34,7 @@ class TodosMapDS implements ITodosLocalDS {
   @override
   Stream<Either<Failure, List<TodoModel>>> list(TodoFilterModel filter) {
     Either<Failure, List<TodoModel>> value;
-    if (TodoState.both == filter.state) {
+    if (TodoState.all == filter.state) {
       value = Right(_map.values.toList());
     } else {
       final filtered = _map.values.toList().where(
