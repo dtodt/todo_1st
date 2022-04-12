@@ -12,14 +12,14 @@ class TodoList extends StatelessWidget {
     required this.onItemChecked,
   }) : super(key: key);
 
-  final Stream<List<Todo>>? items;
+  final Stream<List<TodoEntity>>? items;
   final CheckCallback? onItemChecked;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Todo>>(
+    return StreamBuilder<List<TodoEntity>>(
       stream: items,
-      builder: (context, AsyncSnapshot<List<Todo>> snapshots) {
+      builder: (context, AsyncSnapshot<List<TodoEntity>> snapshots) {
         if (!snapshots.hasData || snapshots.data!.isEmpty) {
           return DataFallback(loading: !snapshots.hasData);
         }

@@ -4,17 +4,19 @@ import 'package:dartz/dartz.dart';
 import 'package:sembast/sembast.dart';
 import 'package:todo1st/app/core/errors/index.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/shared/data/datasources/index.dart';
 
 import 'i_todos_local_ds.dart';
 
 class TodosSembastDS implements ITodosLocalDS {
   final Database _db;
+  final IKeyDS _keyDS;
   late StoreRef _store;
 
   final availableFilter = Filter.equals('done', false);
   final doneFilter = Filter.equals('done', true);
 
-  TodosSembastDS(this._db) {
+  TodosSembastDS(this._db, this._keyDS) {
     _store = stringMapStoreFactory.store(todosStoreName);
   }
 

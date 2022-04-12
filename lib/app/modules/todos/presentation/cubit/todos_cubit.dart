@@ -1,14 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
 
 import 'todos_state.dart';
 
-part 'todos_cubit.g.dart';
-
 ///
-@Injectable(singleton: false)
 class TodosCubit extends Cubit<TodosState> {
   final TodosCount _todosCount;
   final TodosList _todosList;
@@ -23,18 +20,19 @@ class TodosCubit extends Cubit<TodosState> {
   ) : super(TodosState.initial());
 
   Future<void> add(String description) async {
-    await save(TodoEntity(description: description));
+    final model = TodoModel.empty();
+    await save(model.copyWith(description: description));
   }
 
-  Future<TodoCount> count(TodoFilter filter) {
+  Future<TodoCountEntity> count(TodoFilterEntity filter) {
     return _todosCount(filter);
   }
 
-  Stream<List<Todo>> list(TodoFilter filter) {
+  Stream<List<TodoEntity>> list(TodoFilterEntity filter) {
     return _todosList(filter);
   }
 
-  Future<void> save(Todo entity) async {
+  Future<void> save(TodoEntity entity) async {
     await _todosSave(entity);
     // Little hack to update the stream,
     // does not work properly beacuse the list method in datasource
