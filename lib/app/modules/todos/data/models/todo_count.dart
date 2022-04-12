@@ -1,18 +1,32 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 
-part 'todo_count.freezed.dart';
-part 'todo_count.g.dart';
-
 /// Data implementation of todo count
-@freezed
-class TodoCountModel with _$TodoCountModel implements TodoCount {
-  factory TodoCountModel({
-    @Default(0) int all,
-    @Default(0) int available,
-    @Default(0) int done,
-  }) = _TodoCountModel;
+class TodoCountModel extends TodoCountEntity {
+  const TodoCountModel({
+    required int all,
+    required int available,
+    required int done,
+  }) : super(
+          all: all,
+          available: available,
+          done: done,
+        );
 
-  factory TodoCountModel.fromJson(Map<String, dynamic> json) =>
-      _$TodoCountModelFromJson(json);
+  factory TodoCountModel.empty() => const TodoCountModel(
+        all: 0,
+        available: 0,
+        done: 0,
+      );
+
+  TodoCountModel copyWith({
+    int? all,
+    int? available,
+    int? done,
+  }) {
+    return TodoCountModel(
+      all: all ?? this.all,
+      available: available ?? this.available,
+      done: done ?? this.done,
+    );
+  }
 }
