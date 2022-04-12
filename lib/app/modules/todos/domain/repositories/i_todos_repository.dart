@@ -5,14 +5,14 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 ///
 abstract class ITodosRepository {
   ///
-  Future<Either<Failure, TodoCount>> count(TodoFilter filter);
+  Future<Either<Failure, TodoCountEntity>> count(TodoFilterEntity filter);
 
   ///
-  Stream<Either<Failure, List<Todo>>> list(TodoFilter filter);
+  Stream<Either<Failure, List<TodoEntity>>> list(TodoFilterEntity filter);
 
   ///
-  Future<Either<Failure, Todo>> read(String uid);
+  Future<Either<Failure, TodoEntity>> read(String uid);
 
   ///
-  Future<Either<Failure, Unit>> save(Todo entity);
+  Future<Either<Failure, Unit>> save(TodoEntity entity);
 }
