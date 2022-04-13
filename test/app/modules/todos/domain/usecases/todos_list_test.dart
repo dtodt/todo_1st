@@ -1,38 +1,39 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/todo_filter.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
-import '../../../../../constants/index.dart';
-import '../../../../../mocks/index.dart';
+import '../../../../../constants.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late ITodosRepository repository;
   late TodosList usecase;
 
   setUpAll(() {
-    repository = MockITodosRepository();
+    repository = TodosRepositoryMock();
     usecase = TodosList(repository);
   });
 
   test('should list successfully', () async {
-    when(repository.list(TodoFilterEntity())).thenAnswer((_) => Stream.value(
-          Right([fTodo]),
-        ));
+    when(() => repository.list(TodoFilterModel.all()))
+        .thenAnswer((_) => Stream.value(
+              Right([fTodo]),
+            ));
 
-    usecase(TodoFilterEntity())
+    usecase(TodoFilterModel.all())
         .listen(expectAsync1((result) => expect(result, isNotEmpty)));
   });
 
   test('should list nothing', () async {
-    when(repository.list(TodoFilterEntity())).thenAnswer((_) => Stream.value(
-          Left(Failure()),
-        ));
+    when(() => repository.list(TodoFilterModel.all()))
+        .thenAnswer((_) => Stream.value(
+              const Left(Failure()),
+            ));
 
-    usecase(TodoFilterEntity())
+    usecase(TodoFilterModel.all())
         .listen(expectAsync1((result) => expect(result, isEmpty)));
   });
 }

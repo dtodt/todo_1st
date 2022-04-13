@@ -7,7 +7,7 @@ import 'package:todo1st/app/modules/todos/todos_module.dart';
 import 'package:todo1st/app/shared/data/services/index.dart';
 import 'package:todo1st/app/shared/shared_module.dart';
 
-import '../../../../../constants/index.dart';
+import '../../../../../constants.dart';
 import '../../../../../overrides/index.dart';
 
 void main() {

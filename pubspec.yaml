@@ -32,7 +32,6 @@ dependencies:
   firebase_core: ^1.14.0
   firebase_crashlytics: ^2.6.1
   firebase_remote_config: ^2.0.3
-  json_annotation: ^4.4.0
   sembast: ^3.2.0
   sembast_sqflite: ^2.0.1
   sembast_web: ^2.0.1+1
@@ -42,33 +41,20 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.0.3
-  build_runner: ^2.1.8
 
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^1.0.4
-  freezed: 1.1.0
-  freezed_annotation: ^1.1.0
 
   integration_test:
     sdk: flutter
 
-  json_serializable: ^6.1.5
-  modular_codegen: ^3.0.4
   modular_test: ^1.0.1+2
   mocktail: ^0.3.0
-  mockito: ^5.1.0
+  dart_code_metrics: ^4.12.0
 
 flutter:
   uses-material-design: true
   assets:
     - images/
-
-vars:
-  replace: --delete-conflicting-outputs
-  runner: flutter pub run build_runner
-
-scripts:
-  rbuild: $runner build $replace
-  rwatch: $runner watch $replace

@@ -1,69 +1,62 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/modules/todos/data/models/index.dart';
-import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:todo1st/app/shared/data/datasources/index.dart';
-import 'package:uuid/uuid.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
-import '../../../../../constants/index.dart';
-import '../../../../../mocks/index.dart';
+import '../../../../../constants.dart';
+import '../../../../../mocks.dart';
 
 void main() {
-  late IKeyDS keyDS;
   late ITodosLocalDS localDS;
   late ITodosRepository repository;
-  late Uuid uuid;
 
   setUpAll(() {
-    uuid = MockUuid();
-    keyDS = KeyUuidDS(uuid);
-    localDS = MockITodosLocalDS();
-    repository = TodosRepository(localDS, keyDS);
+    localDS = TodosLocalDSMock();
+    repository = TodosRepository(localDS);
   });
 
   test('should count 1', () async {
-    when(localDS.count(fFilterAll))
-        .thenAnswer((_) async => Right(TodoCountModel()));
+    when(() => localDS.count(fFilterAll))
+        .thenAnswer((_) async => const Right(kCountMap));
 
     final result = await repository.count(fFilterAll);
     expect(result.isRight(), true);
   });
 
   test('should count nothing', () async {
-    when(localDS.count(fFilterAll)).thenAnswer((_) async => Left(Failure()));
+    when(() => localDS.count(fFilterAll))
+        .thenAnswer((_) async => const Left(Failure()));
 
     final result = await repository.count(fFilterAll);
     expect(result.isLeft(), true);
   });
 
   test('should list successfully', () async {
-    when(localDS.list(fFilterAll)).thenAnswer((_) => Stream.value(
-          Right([fTodo]),
-        ));
+    when(() => localDS.list(TodoFilterModel.all()))
+        .thenAnswer((_) => Stream.value(
+              const Right([kTodoMap]),
+            ));
 
     repository
-        .list(TodoFilterEntity())
+        .list(TodoFilterModel.all())
         .listen(expectAsync1((result) => expect(result.isRight(), true)));
   });
 
   test('should list nothing', () async {
-    when(localDS.list(fFilterAll)).thenAnswer((_) => Stream.value(
-          Left(Failure()),
-        ));
+    when(() => localDS.list(TodoFilterModel.all()))
+        .thenAnswer((_) => Stream.value(
+              const Left(Failure()),
+            ));
 
     repository
-        .list(TodoFilterEntity())
+        .list(TodoFilterModel.all())
         .listen(expectAsync1((result) => expect(result.isLeft(), true)));
   });
 
   test('should create', () async {
-    when(uuid.v1()).thenReturn(kNewUid);
-    when(localDS.save(fNewTodoUpdated))
+    when(() => localDS.save(kNewTodoMap))
         .thenAnswer((_) async => const Right(unit));
 
     final result = await repository.save(fNewTodo);
@@ -71,21 +64,24 @@ void main() {
   });
 
   test('should update', () async {
-    when(localDS.save(fTodo)).thenAnswer((_) async => const Right(unit));
+    when(() => localDS.save(kTodoMap))
+        .thenAnswer((_) async => const Right(unit));
 
     final result = await repository.save(fTodo);
     expect(result.isRight(), true);
   });
 
   test('should read successfully', () async {
-    when(localDS.read(kUid)).thenAnswer((_) async => Right(fTodo));
+    when(() => localDS.read(kUid))
+        .thenAnswer((_) async => const Right(kTodoMap));
 
     final result = await repository.read(kUid);
     expect(result.isRight(), true);
   });
 
   test('should read nothing', () async {
-    when(localDS.read(kUid)).thenAnswer((_) async => Left(Failure()));
+    when(() => localDS.read(kUid))
+        .thenAnswer((_) async => const Left(Failure()));
 
     final result = await repository.read(kUid);
     expect(result.isLeft(), true);

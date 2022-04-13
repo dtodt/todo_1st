@@ -1,35 +1,35 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
-import '../../../../../mocks/index.dart';
+import '../../../../../constants.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late ITodosRepository repository;
   late TodosCount usecase;
 
   setUpAll(() {
-    repository = MockITodosRepository();
+    repository = TodosRepositoryMock();
     usecase = TodosCount(repository);
   });
 
   test('should count 1', () async {
-    when(repository.count(TodoFilterEntity()))
-        .thenAnswer((_) async => Right(TodoCountEntity(all: 1)));
+    when(() => repository.count(TodoFilterModel.all()))
+        .thenAnswer((_) async => const Right(kCountAll));
 
-    final result = await usecase(TodoFilterEntity());
-    expect(result, TodoCountEntity(all: 1));
+    final result = await usecase(TodoFilterModel.all());
+    expect(result, kCountAll);
   });
 
   test('should count 0', () async {
-    when(repository.count(TodoFilterEntity()))
-        .thenAnswer((_) async => Left(Failure()));
+    when(() => repository.count(TodoFilterModel.all()))
+        .thenAnswer((_) async => const Left(Failure()));
 
-    final result = await usecase(TodoFilterEntity());
-    expect(result, TodoCountEntity());
+    final result = await usecase(TodoFilterModel.all());
+    expect(result, fCountEntity);
   });
 }

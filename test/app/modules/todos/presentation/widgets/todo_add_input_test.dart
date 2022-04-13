@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
 
-import '../../../../../constants/index.dart';
+import '../../../../../constants.dart';
 import '../../../../../overrides/index.dart';
 
 void main() {
