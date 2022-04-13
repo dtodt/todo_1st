@@ -1,17 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/modules/todos/data/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
-import 'package:todo1st/app/modules/todos/presentation/cubit/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/bloc/todos_bloc.dart';
 import 'package:todo1st/app/modules/todos/todos_module.dart';
-import 'package:todo1st/app/shared/data/datasources/index.dart';
-import 'package:todo1st/app/shared/data/services/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 import 'package:todo1st/app/shared/shared_module.dart';
 
-import '../../../overrides/index.dart';
+import '../../../overrides.dart';
 
 void main() {
   setUpAll(() {
@@ -29,28 +26,22 @@ void main() {
   testWidgets('should setup all dependencies correctly', (_) async {
     await Modular.isModuleReady<SharedModule>();
 
-    final keyDS = Modular.get<IKeyDS>();
-    expect(keyDS, isA<KeyUuidDS>());
-
     final localDS = Modular.get<ITodosLocalDS>();
     expect(localDS, isA<TodosSembastDS>());
 
     final repository = Modular.get<ITodosRepository>();
     expect(repository, isA<TodosRepository>());
 
-    final countUsecase = Modular.get<TodosCount>();
-    expect(countUsecase, isA<TodosCount>());
+    final saveUsecase = Modular.get<ITodosAdd>();
+    expect(saveUsecase, isA<TodosAdd>());
 
-    final listUsecase = Modular.get<TodosList>();
-    expect(listUsecase, isA<TodosList>());
+    final readUsecase = Modular.get<ITodosCheck>();
+    expect(readUsecase, isA<TodosCheck>());
 
-    final readUsecase = Modular.get<TodosRead>();
-    expect(readUsecase, isA<TodosRead>());
+    final listUsecase = Modular.get<ITodosFetch>();
+    expect(listUsecase, isA<TodosFetch>());
 
-    final saveUsecase = Modular.get<TodosSave>();
-    expect(saveUsecase, isA<TodosSave>());
-
-    final cubit = Modular.get<TodosCubit>();
-    expect(cubit, isA<TodosCubit>());
+    final bloc = Modular.get<TodosBloc>();
+    expect(bloc, isA<TodosBloc>());
   });
 }

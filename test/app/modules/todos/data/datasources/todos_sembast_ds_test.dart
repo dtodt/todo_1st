@@ -2,8 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/shared/data/datasources/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../constants.dart';
@@ -36,40 +37,28 @@ void main() {
     await store.delete(database);
   });
 
-  test('should count sucessfully', () async {
-    await store.record(kUid).put(database, kTodoMap);
-    await store.record(kNewUid).put(database, kNewTodoMap);
-
-    final result = await localDS.count(fFilterAll);
-    expect(result.isRight(), true);
-    expect(
-      result.getOrElse(() => kCountMap),
-      {'available': 1, 'done': 1, 'all': 2},
-    );
-  });
-
   test('should list 2, using filter both', () async {
-    await store.record(kUid).put(database, kTodoMap);
-    await store.record(kNewUid).put(database, kNewTodoMap);
+    await store.record(kUid).put(database, kTodoDoneMap);
+    await store.record(kNewUid).put(database, kTodoNewMap);
 
-    final result = await localDS.list(fFilterAll).first;
+    final result = await localDS.list(TodoFilter.all()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 2);
   });
 
   test('should list 1, using filter done', () async {
-    await store.record(kUid).put(database, kTodoMap);
-    await store.record(kNewUid).put(database, kNewTodoMap);
+    await store.record(kUid).put(database, kTodoDoneMap);
+    await store.record(kNewUid).put(database, kTodoNewMap);
 
-    final result = await localDS.list(fFilterDone).first;
+    final result = await localDS.list(TodoFilter.done()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 1);
   });
 
   test('should list 0, using filter todo', () async {
-    await store.record(kUid).put(database, kTodoMap);
+    await store.record(kUid).put(database, kTodoDoneMap);
 
-    final result = await localDS.list(fFilterAvailable).first;
+    final result = await localDS.list(TodoFilter.available()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 0);
   });
@@ -77,19 +66,19 @@ void main() {
   test('should create', () async {
     when(() => uuid.v1()).thenReturn(kNewUid);
 
-    final result = await localDS.save(kNewTodoMap);
+    final result = await localDS.save(kTodoNewMap);
     expect(result.isRight(), true);
   });
 
   test('should update', () async {
-    await store.record(kUid).put(database, kTodoMap);
+    await store.record(kUid).put(database, kTodoDoneMap);
 
-    final result = await localDS.save(kTodoUpdatedMap);
+    final result = await localDS.save(kTodoUnDoneMap);
     expect(result.isRight(), true);
   });
 
   test('should read successfully', () async {
-    await store.record(kUid).put(database, kTodoMap);
+    await store.record(kUid).put(database, kTodoDoneMap);
 
     final result = await localDS.read(kUid);
     expect(result.isRight(), true);

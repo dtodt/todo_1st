@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
-import 'package:todo1st/app/modules/todos/presentation/pages/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/index.dart';
 import 'package:todo1st/app/modules/todos/todos_module.dart';
-import 'package:todo1st/app/shared/data/services/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 import 'package:todo1st/app/shared/shared_module.dart';
 
 import '../../../../../constants.dart';
-import '../../../../../overrides/index.dart';
+import '../../../../../overrides.dart';
 
 void main() {
   setUpAll(() {

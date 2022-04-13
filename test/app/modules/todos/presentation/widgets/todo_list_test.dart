@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/index.dart';
 
 import '../../../../../constants.dart';
-import '../../../../../overrides/index.dart';
+import '../../../../../overrides.dart';
 
 void main() {
   testWidgets('task list should load one item and should emit false on tap',
@@ -12,7 +12,7 @@ void main() {
 
     await tester.pumpWidget(FakeSliverApp(
       child: TodoList(
-          items: Stream.value([fTodo]),
+          items: const [kTodoDone],
           onItemChecked: (uid, checked) {
             taskUid = uid;
             taskChecked = checked;
@@ -34,7 +34,7 @@ void main() {
 
     await tester.pumpWidget(FakeSliverApp(
       child: TodoList(
-          items: Stream.value([fNewTodoUpdated]),
+          items: const [kTodoUnDone],
           onItemChecked: (uid, checked) {
             taskUid = uid;
             taskChecked = checked;
@@ -45,7 +45,7 @@ void main() {
     await tester.tap(find.text(kDescription));
     await tester.pumpAndSettle();
 
-    expect(taskUid, kNewUid);
+    expect(taskUid, kUid);
     expect(taskChecked, true);
   });
 }

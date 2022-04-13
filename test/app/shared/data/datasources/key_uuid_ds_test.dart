@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:todo1st/app/shared/data/datasources/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../constants.dart';

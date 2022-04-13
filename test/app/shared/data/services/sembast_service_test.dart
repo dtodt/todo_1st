@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
-import 'package:todo1st/app/shared/data/services/sembast_service.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 
 void main() {
   final SembastService service = SembastService();
