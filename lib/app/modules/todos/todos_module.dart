@@ -15,10 +15,10 @@ class TodosModule extends Module {
       (i) => TodosSembastDS(i.get<Database>(), i.get<IKeyDS>()),
     ),
     Bind<ITodosRepository>((i) => TodosRepository(i.get<ITodosLocalDS>())),
-    Bind<TodosCount>((i) => TodosCount(i.get<ITodosRepository>())),
-    Bind<TodosList>((i) => TodosList(i.get<ITodosRepository>())),
-    Bind<TodosRead>((i) => TodosRead(i.get<ITodosRepository>())),
-    Bind<TodosSave>((i) => TodosSave(i.get<ITodosRepository>())),
+    Bind<ITodosCount>((i) => TodosCount(i.get<ITodosRepository>())),
+    Bind<ITodosList>((i) => TodosList(i.get<ITodosRepository>())),
+    Bind<ITodosRead>((i) => TodosRead(i.get<ITodosRepository>())),
+    Bind<ITodosSave>((i) => TodosSave(i.get<ITodosRepository>())),
     Bind<TodosCubit>(
       (i) => TodosCubit(
         i.get<TodosCount>(),

@@ -7,10 +7,10 @@ import 'todos_state.dart';
 
 ///
 class TodosCubit extends Cubit<TodosState> {
-  final TodosCount _todosCount;
-  final TodosList _todosList;
-  final TodosRead _todosRead;
-  final TodosSave _todosSave;
+  final ITodosCount _todosCount;
+  final ITodosList _todosList;
+  final ITodosRead _todosRead;
+  final ITodosSave _todosSave;
 
   TodosCubit(
     this._todosCount,
@@ -20,8 +20,8 @@ class TodosCubit extends Cubit<TodosState> {
   ) : super(TodosState.initial());
 
   Future<void> add(String description) async {
-    final model = TodoModel.empty();
-    await save(model.copyWith(description: description));
+    final model = TodoModel.empty().copyWith(description: description);
+    await save(model);
   }
 
   Future<TodoCountEntity> count(TodoFilterEntity filter) {

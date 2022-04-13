@@ -1,4 +1,5 @@
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
 class TodosState {
   final TodoFilterEntity filter;
@@ -11,7 +12,7 @@ class TodosState {
 
   factory TodosState.initial() {
     return TodosState(
-      filter: TodoFilterEntity.all(),
+      filter: TodoFilterModel.all(),
       lastModified: DateTime.now(),
     );
   }

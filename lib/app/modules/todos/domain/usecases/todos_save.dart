@@ -4,7 +4,10 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 
 ///
-class TodosSave with FutureUseCase<Unit, TodoEntity> {
+abstract class ITodosSave with FutureUseCase<Unit, TodoEntity> {}
+
+///
+class TodosSave implements ITodosSave {
   final ITodosRepository repository;
 
   const TodosSave(this.repository);

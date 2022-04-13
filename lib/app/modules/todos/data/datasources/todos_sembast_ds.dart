@@ -68,8 +68,12 @@ class TodosSembastDS implements ITodosLocalDS {
 
   @override
   Future<Either<Failure, Unit>> save(Map<String, dynamic> model) async {
-    await _store.record(model['uid']).put(_db, model);
+    await _store.record(_getUid(model['uid'])).put(_db, model);
     return const Right(unit);
+  }
+
+  String _getUid(String uid) {
+    return uid.isNotEmpty ? uid : _keyDS.getKey();
   }
 
   void _handleData(List<RecordSnapshot> data,

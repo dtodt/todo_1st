@@ -5,7 +5,11 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 
 ///
-class TodosRead with FutureUseCase<Either<Failure, TodoEntity>, String> {
+abstract class ITodosRead
+    with FutureUseCase<Either<Failure, TodoEntity>, String> {}
+
+///
+class TodosRead implements ITodosRead {
   final ITodosRepository repository;
 
   const TodosRead(this.repository);

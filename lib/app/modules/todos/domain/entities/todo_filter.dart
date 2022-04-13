@@ -17,7 +17,4 @@ class TodoFilterEntity {
   const TodoFilterEntity({
     required this.state,
   });
-
-  factory TodoFilterEntity.all() =>
-      const TodoFilterEntity(state: TodoState.all);
 }

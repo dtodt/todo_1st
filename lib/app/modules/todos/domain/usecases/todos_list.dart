@@ -3,7 +3,11 @@ import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
 import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
 
 ///
-class TodosList with StreamUseCase<List<TodoEntity>, TodoFilterEntity> {
+abstract class ITodosList
+    with StreamUseCase<List<TodoEntity>, TodoFilterEntity> {}
+
+///
+class TodosList implements ITodosList {
   final ITodosRepository repository;
 
   const TodosList(this.repository);
