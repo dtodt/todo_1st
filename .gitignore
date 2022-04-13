@@ -45,11 +45,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Generated files
-*.g.dart
-*.freezed.dart
-*.mocks.dart
-
 # Firebase configuration files
 .firebase/
 lib/firebase_options.dart
