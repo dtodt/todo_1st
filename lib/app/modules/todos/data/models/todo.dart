@@ -1,4 +1,4 @@
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
 /// Data implementation of todo
 class TodoModel extends TodoEntity {

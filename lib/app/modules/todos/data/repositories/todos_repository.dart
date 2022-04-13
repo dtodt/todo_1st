@@ -1,10 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/data/adapters/todo_count_adapter.dart';
-import 'package:todo1st/app/modules/todos/data/adapters/todo_entity_adapter.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
+import 'package:todo1st/app/core/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
 class TodosRepository implements ITodosRepository {
   final ITodosLocalDS _localDS;
@@ -13,19 +10,7 @@ class TodosRepository implements ITodosRepository {
 
   ///
   @override
-  Future<Either<Failure, TodoCountEntity>> count(
-      TodoFilterEntity filter) async {
-    final countOrFailure = await _localDS.count(filter);
-    return countOrFailure.fold(
-      (failure) => Left(failure),
-      (count) => Right(TodoCountAdapter.fromJson(count)),
-    );
-  }
-
-  ///
-  @override
-  Stream<Either<Failure, List<TodoEntity>>> list(
-      TodoFilterEntity filter) async* {
+  Stream<Either<Failure, List<TodoEntity>>> list(TodoFilter filter) async* {
     final stream = _localDS.list(filter);
 
     yield* stream.map(

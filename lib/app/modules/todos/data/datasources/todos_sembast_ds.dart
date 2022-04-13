@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:sembast/sembast.dart';
-import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
-import 'package:todo1st/app/shared/data/datasources/index.dart';
+import 'package:todo1st/app/core/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 
 import 'i_todos_local_ds.dart';
 
@@ -21,27 +21,12 @@ class TodosSembastDS implements ITodosLocalDS {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> count(
-      TodoFilterEntity filter) async {
-    final int available = await _store.count(_db, filter: availableFilter);
-    final int done = await _store.count(_db, filter: doneFilter);
-    final int all = await _store.count(_db);
-
-    return Right({
-      'all': all,
-      'available': available,
-      'done': done,
-    });
-  }
-
-  @override
-  Stream<Either<Failure, List<Map<String, dynamic>>>> list(
-      TodoFilterEntity filter) {
+  Stream<Either<Failure, List<Map<String, dynamic>>>> list(TodoFilter filter) {
     Filter? dbFilter;
-    if (TodoState.done == filter.state) {
+    if (TodoStatus.done == filter.status) {
       dbFilter = doneFilter;
     }
-    if (TodoState.available == filter.state) {
+    if (TodoStatus.available == filter.status) {
       dbFilter = availableFilter;
     }
 
