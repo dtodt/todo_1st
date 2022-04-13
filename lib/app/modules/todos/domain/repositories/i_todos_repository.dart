@@ -1,14 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:todo1st/app/core/errors/index.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/core/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
 ///
 abstract class ITodosRepository {
   ///
-  Future<Either<Failure, TodoCountEntity>> count(TodoFilterEntity filter);
-
-  ///
-  Stream<Either<Failure, List<TodoEntity>>> list(TodoFilterEntity filter);
+  Stream<Either<Failure, List<TodoEntity>>> list(TodoFilter filter);
 
   ///
   Future<Either<Failure, TodoEntity>> read(String uid);
