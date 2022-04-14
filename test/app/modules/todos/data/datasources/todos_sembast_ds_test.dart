@@ -1,22 +1,30 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/modules/todos/data/models/index.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../../../constants/index.dart';
+import '../../../../../constants.dart';
+import '../../../../../mocks.dart';
 
 void main() {
+  late Uuid uuid;
   late Database database;
+  late IKeyDS keyDS;
   late StoreRef store;
   late ITodosLocalDS localDS;
 
   setUpAll(() async {
     disableSembastCooperator();
 
+    uuid = UuidMock();
+    keyDS = KeyUuidDS(uuid);
     database =
         await databaseFactoryMemory.openDatabase(sembastInMemoryDatabasePath);
-    localDS = TodosSembastDS(database);
+    localDS = TodosSembastDS(database, keyDS);
 
     store = stringMapStoreFactory.store(todosStoreName);
   });
@@ -29,66 +37,48 @@ void main() {
     await store.delete(database);
   });
 
-  test('should count sucessfully', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
-    await store.record(kNewUid).put(database, fNewTodoUpdated.toJson());
-
-    final result = await localDS.count(fFilterAll);
-    expect(result.isRight(), true);
-    expect(
-      result.getOrElse(() => TodoCountModel()),
-      TodoCountModel(available: 1, done: 1, all: 2),
-    );
-  });
-
   test('should list 2, using filter both', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
-    await store.record(kNewUid).put(database, fNewTodoUpdated.toJson());
+    await store.record(kUid).put(database, kTodoDoneMap);
+    await store.record(kNewUid).put(database, kTodoNewMap);
 
-    final result = await localDS.list(fFilterAll).first;
+    final result = await localDS.list(TodoFilter.all()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 2);
   });
 
   test('should list 1, using filter done', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
-    await store.record(kNewUid).put(database, fNewTodoUpdated.toJson());
+    await store.record(kUid).put(database, kTodoDoneMap);
+    await store.record(kNewUid).put(database, kTodoNewMap);
 
-    final result = await localDS.list(fFilterDone).first;
+    final result = await localDS.list(TodoFilter.done()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 1);
   });
 
   test('should list 0, using filter todo', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
+    await store.record(kUid).put(database, kTodoDoneMap);
 
-    final result = await localDS.list(fFilterAvailable).first;
+    final result = await localDS.list(TodoFilter.available()).first;
     expect(result.isRight(), true);
     expect(result.getOrElse(() => []).length, 0);
   });
 
   test('should create', () async {
-    final result = await localDS.save(fNewTodoUpdated);
-    expect(result.isRight(), true);
+    when(() => uuid.v1()).thenReturn(kNewUid);
 
-    final record = await store.record(kNewUid).get(database);
-    expect(TodoModel.fromJson(record), fNewTodoUpdated);
+    final result = await localDS.save(kTodoNewMap);
+    expect(result.isRight(), true);
   });
 
   test('should update', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
+    await store.record(kUid).put(database, kTodoDoneMap);
 
-    final updated = fTodo.copyWith(done: false);
-
-    final result = await localDS.save(updated);
+    final result = await localDS.save(kTodoUnDoneMap);
     expect(result.isRight(), true);
-
-    final record = await store.record(kUid).get(database);
-    expect(TodoModel.fromJson(record), updated);
   });
 
   test('should read successfully', () async {
-    await store.record(kUid).put(database, fTodo.toJson());
+    await store.record(kUid).put(database, kTodoDoneMap);
 
     final result = await localDS.read(kUid);
     expect(result.isRight(), true);

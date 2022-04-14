@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo1st/app/shared/presentation/widgets/index.dart';
+import 'package:todo1st/app/shared/presentation/index.dart';
 
-import '../../../../overrides/index.dart';
+import '../../../../overrides.dart';
 
 void main() {
   final AnimationController controller = AnimationController(

@@ -1,16 +1,13 @@
-import 'package:mockito/annotations.dart';
-import 'package:todo1st/app/modules/todos/data/datasources/index.dart';
-import 'package:todo1st/app/modules/todos/domain/repositories/index.dart';
-import 'package:todo1st/app/modules/todos/domain/usecases/index.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:todo1st/app/modules/todos/data/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
-@GenerateMocks([
-  TodosCount,
-  TodosList,
-  TodosRead,
-  TodosSave,
-  ITodosRepository,
-  ITodosLocalDS,
-])
-void main() {
-  /// ? Mock generator class
-}
+class TodosLocalDSMock extends Mock implements ITodosLocalDS {}
+
+class TodosRepositoryMock extends Mock implements ITodosRepository {}
+
+class TodosAddMock extends Mock implements ITodosAdd {}
+
+class TodosCheckMock extends Mock implements ITodosCheck {}
+
+class TodosFetchMock extends Mock implements ITodosFetch {}

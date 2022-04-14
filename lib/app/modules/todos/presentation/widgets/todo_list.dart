@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
 /// Signature of this widget callbacks.
 typedef CheckCallback = void Function(String uid, bool checked);
@@ -12,34 +12,25 @@ class TodoList extends StatelessWidget {
     required this.onItemChecked,
   }) : super(key: key);
 
-  final Stream<List<Todo>>? items;
+  final List<TodoEntity>? items;
   final CheckCallback? onItemChecked;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Todo>>(
-      stream: items,
-      builder: (context, AsyncSnapshot<List<Todo>> snapshots) {
-        if (!snapshots.hasData || snapshots.data!.isEmpty) {
-          return DataFallback(loading: !snapshots.hasData);
-        }
-
-        return SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (_, index) {
-            final task = snapshots.data![index];
-            return CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              key: Key(task.uid),
-              title: Text(task.description),
-              value: task.done,
-              onChanged: (checked) => onItemChecked!(task.uid, checked!),
-            );
-          },
-          childCount: snapshots.data!.length,
-        ));
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+      (_, index) {
+        final todo = items![index];
+        return CheckboxListTile(
+          controlAffinity: ListTileControlAffinity.leading,
+          key: Key(todo.uid),
+          title: Text(todo.description),
+          value: todo.done,
+          onChanged: (checked) => onItemChecked!(todo.uid, checked!),
+        );
       },
-    );
+      childCount: items!.length,
+    ));
   }
 }
 

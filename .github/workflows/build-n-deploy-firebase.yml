@@ -45,8 +45,6 @@ jobs:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
       - name: Install dependencies
         run: flutter pub get
-      - name: Generate code with build_runner
-        run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Build web artifact
         run: flutter build web --no-pub --no-tree-shake-icons --release --source-maps --web-renderer=html
       - name: Generate sitemap

@@ -1,12 +1,8 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uuid/uuid.dart';
 
 import 'i_key_ds.dart';
 
-part 'key_uuid_ds.g.dart';
-
 ///
-@Injectable()
 class KeyUuidDS implements IKeyDS {
   final Uuid _uuid;
 

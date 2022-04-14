@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
 import 'package:sembast/sembast.dart';
 import 'package:todo1st/app/app_module.dart';
-import 'package:todo1st/app/shared/data/services/index.dart';
+import 'package:todo1st/app/shared/data/index.dart';
 
-import '../overrides/index.dart';
+import '../overrides.dart';
 
 void main() {
   setUpAll(() {

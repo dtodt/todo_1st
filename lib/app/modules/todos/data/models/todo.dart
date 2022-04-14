@@ -1,20 +1,32 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo1st/app/modules/todos/domain/entities/index.dart';
+import 'package:todo1st/app/modules/todos/domain/index.dart';
 
-part 'todo.freezed.dart';
-part 'todo.g.dart';
-
-@freezed
-class TodoModel with _$TodoModel implements Todo {
-  factory TodoModel({
+/// Data implementation of todo
+class TodoModel extends TodoEntity {
+  const TodoModel({
     required String description,
     required bool done,
     required String uid,
-  }) = _TodoModel;
+  }) : super(
+          description: description,
+          done: done,
+          uid: uid,
+        );
 
-  factory TodoModel.fromJson(Map<String, dynamic> json) =>
-      _$TodoModelFromJson(json);
+  factory TodoModel.empty() => const TodoModel(
+        description: '',
+        done: false,
+        uid: '',
+      );
 
-  factory TodoModel.fromEntity(Todo entity) => TodoModel(
-      description: entity.description, done: entity.done, uid: entity.uid);
+  TodoModel copyWith({
+    String? description,
+    bool? done,
+    String? uid,
+  }) {
+    return TodoModel(
+      description: description ?? this.description,
+      done: done ?? this.done,
+      uid: uid ?? this.uid,
+    );
+  }
 }

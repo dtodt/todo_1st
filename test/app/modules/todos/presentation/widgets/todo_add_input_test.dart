@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo1st/app/modules/todos/presentation/widgets/index.dart';
+import 'package:todo1st/app/modules/todos/presentation/index.dart';
 
-import '../../../../../constants/index.dart';
-import '../../../../../overrides/index.dart';
+import '../../../../../constants.dart';
+import '../../../../../overrides.dart';
 
 void main() {
   testWidgets('should accept a text and emit it when the field is submited',

@@ -27,9 +27,6 @@ linter:
 
 analyzer:
   exclude:
-    - '**/*.g.dart'
-    - '**/*.freezed.dart'
-    - '**/*.mocks.dart'
     - 'lib/firebase_options_template.dart'
   errors:
     invalid_annotation_target: ignore
