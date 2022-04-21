@@ -46,14 +46,13 @@ class TodosSembastDS implements ITodosLocalDS {
     if (result == null) {
       return const Left(Failure());
     }
-
-    final json = result as Map<String, dynamic>;
-    return Right(json);
+    return Right(_fromStore(uid, result));
   }
 
   @override
   Future<Either<Failure, Unit>> save(Map<String, dynamic> model) async {
-    await _store.record(_getUid(model['uid'])).put(_db, model);
+    final uid = _getUid(model['uid']);
+    await _store.record(uid).put(_db, _toStore(model));
     return const Right(unit);
   }
 
@@ -65,8 +64,23 @@ class TodosSembastDS implements ITodosLocalDS {
       EventSink<Either<Failure, List<Map<String, dynamic>>>> sink) {
     final List<Map<String, dynamic>> models = [];
     for (var record in data) {
-      models.add(record.value);
+      models.add(_fromStore(record.key, record.value));
     }
     sink.add(Right(models));
+  }
+
+  Map<String, dynamic> _fromStore(dynamic uid, Map<String, dynamic> value) {
+    return {
+      'uid': uid,
+      'description': value['description'],
+      'done': value['done'],
+    };
+  }
+
+  Map<String, dynamic> _toStore(Map<String, dynamic> value) {
+    return {
+      'description': value['description'],
+      'done': value['done'],
+    };
   }
 }
